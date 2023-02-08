@@ -17,3 +17,4 @@ class EmployerDataAccessor{
     }
 const employerDataAccessor = new EmployerDataAccessor();
 module.exports = employerDataAccessor;
+

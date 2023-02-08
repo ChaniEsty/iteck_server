@@ -22,6 +22,5 @@ class LogInDataAccessor{
     }
    
     }
-  
 const logInDataAccessor = new LogInDataAccessor();
 module.exports = logInDataAccessor;

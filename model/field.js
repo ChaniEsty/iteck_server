@@ -21,6 +21,5 @@ class FieldDataAccessor{
     }
    
     }
-  
 const fieldDataAccessor = new FieldDataAccessor();
 module.exports = fieldDataAccessor;

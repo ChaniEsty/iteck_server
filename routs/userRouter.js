@@ -6,4 +6,5 @@ userRouter.route("/")
     .post(userController.createUser)
     .patch(userController.updateDetailes)
 
-module.exports=userRouter;
+
+    module.exports=userRouter;

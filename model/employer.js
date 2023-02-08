@@ -24,6 +24,7 @@ class EmployerDataAccessor{
                     allowNull: false,
                 },
                 
+                
             },
             {
             timestamps: false,

@@ -21,6 +21,5 @@ class SubjectDataAccessor{
     }
    
     }
-  
 const subjectDataAccessor = new SubjectDataAccessor();
 module.exports = subjectDataAccessor;

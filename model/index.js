@@ -27,8 +27,6 @@ class Sequle{
             console.error('Unable to connect to the database: ', error);
         });
     
-    
-
         this.db.Sequelize = Sequelize
         this.db.sequelize = this.sequelize
 

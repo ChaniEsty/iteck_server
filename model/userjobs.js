@@ -23,7 +23,7 @@ class UserjobsDataAccessor{
     
     }
    
-    }
+}
   
 const userjobsDataAccessor = new UserjobsDataAccessor();
 module.exports = userjobsDataAccessor;

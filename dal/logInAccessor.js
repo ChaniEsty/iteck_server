@@ -20,6 +20,7 @@ class LogInDataAccessor{
         {
             return 'Invalid logIn data received';
         }
+        
     }       
 }
 

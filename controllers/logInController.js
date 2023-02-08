@@ -6,6 +6,7 @@ class LogInController {
     createLogIn=async(req,res) => {
         const login=logInDal.createLogIn(req.body);
     //     const{idJob,name,genralDiscription,field,subject,city,neededCharecters,company,employerId}=req.body
+
     //     if (!idJob) {
     //         return res.status(400).json({ message: 'All fields are required' })
     //     }

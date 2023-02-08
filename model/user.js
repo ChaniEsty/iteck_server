@@ -44,7 +44,7 @@ class UserDataAccessor{
     
     }
    
-    }
+}
   
 const userDataAccessor = new UserDataAccessor();
 module.exports = userDataAccessor;

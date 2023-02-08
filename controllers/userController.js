@@ -20,6 +20,7 @@ class UserController {
     //     }
 
     
+    
     updateDetailes=async(req,res)=> {
         //const {userId,field,subject,city}=req.body;
         // const update=User.updateOne({"id":userId},{$set:{"field":field,"subject":subject,"city":city}})

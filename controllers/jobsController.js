@@ -9,6 +9,7 @@ class JobsController {
         //  const fields,subjects,citys;
         //  field? fields=field.split(","):[];
         //  subject? subjects=subject.split(","):[];
+        
         //  city? citys=city.split(","):[];
         //  const jobList=Job.find({"city":{$in:citys},"field":{$in:fields},"subject":{$in:subjects}})
         res.send(jobList);

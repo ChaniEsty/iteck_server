@@ -18,7 +18,9 @@ class EmployerController {
         //     return res.status(400).json({ message: 'Invalid user data received' })
         // }
 
+        
     }
+
     
 }
 const employerController = new EmployerController();

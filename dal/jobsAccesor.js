@@ -21,6 +21,7 @@ class JobsDataAccessor{
 //   // });
 //   }
   
+
 //   endConnection(){this.connection.end();}
 
 //db.testData.find({ $or: [{ name: /a/ }, { value: { $gt: 5 }}]});
@@ -61,6 +62,7 @@ class JobsDataAccessor{
         
     
         }                            }
+        
 
   const jobsDataAccessor = new JobsDataAccessor();
   module.exports = jobsDataAccessor;

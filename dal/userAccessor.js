@@ -46,6 +46,7 @@ createUser=(userDetails)=> {
   }
 
 }
+
 updateDetailes=(updateData)=> {
   const {userId,field,subject,city}=updateData;
   const update=User.updateOne({"id":userId},{$set:{"field":field,"subject":subject,"city":city}})

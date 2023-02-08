@@ -13,6 +13,7 @@ class JobsDataAccessor{
                     autoIncrement:true
                 },
                 name: {
+                    
                     type: DataType.STRING,
                 },
                 genralDiscription: {
@@ -47,6 +48,5 @@ class JobsDataAccessor{
     }
    
 }
-  
 const jobsDataAccessor = new JobsDataAccessor();
 module.exports = jobsDataAccessor;
