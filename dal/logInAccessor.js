@@ -20,8 +20,15 @@ class LogInDataAccessor{
         {
             return 'Invalid logIn data received';
         }
-        
-    }       
+    
+    }  
+    newPassword=(email)=>{
+       const password=LogIn.find({"email":email});
+       if(password)
+            return password.password;
+       else
+            return "wrong email";
+    }     
 }
 
 const logInDataAccessor = new LogInDataAccessor();

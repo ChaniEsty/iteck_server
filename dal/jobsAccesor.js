@@ -1,7 +1,12 @@
+const city = require('../model/city');
 const db = require('../model/index');
-const userDataAccessor = require('../model/user');
+//const userDataAccessor = require('../model/user');
 const Job = db.db.jobs;
 const User=db.db.users;
+const City=db.db.citys;
+const Subject=db.db.subjects;
+const Field=db.db.fields;
+
 class JobsDataAccessor{
 //   constructor() {
 //       this.init();
@@ -35,13 +40,22 @@ class JobsDataAccessor{
     // })
     //db.bios.find( { birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') } } )
     //db.inventory.find( { $or: [ { quantity: { $lt: 20 } }, { price: 10 } ] } )
+//User.hasMany(Invoice);
+//Invoice.belongsTo(User);
+//const users = await User.findAll({ include: Invoice });
+//console.log(JSON.stringify(users, null, 2));
+
     getJobs=(jobsData) => {
         const {field,subject,city}=jobsData;
-      
         const fields= field? field.split(","):[];
         const subjects= subject? subject.split(","):[];
-        const citys= city? city.split(","):[];
-        const jobList=Job.find({"$or":[{"field":{$in:fields}},{"field":""}],"$or":[{"subject":{$in:subjects}},{"subject":""}],"$or":[{"city":{$in:citys}},{"city":""}]})
+        const cities= city? city.split(","):[];
+        // City.hasMany(Job);
+        // Job.belongsTo(City)
+        const idCities=await City.find({"city":{$in:cities}},{name=0,id=1})
+        const idSubjects=await Subject.find({"subject":{$in:subjects}},{name=0,id=1})
+        const idFields=await Field.find({"field":{$in:fields}},{name=0,id=1})
+        const jobList=Job.find({"field":{$in:idFields}},{"subject":{$in:idSubjects}},{"city":{$in:idCities}})
         return jobList;
         }
     createJob=(jobDetails) => {

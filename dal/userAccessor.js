@@ -41,7 +41,8 @@ createUser=(userDetails)=> {
 
   if (user) { // Created 
       return 'New user created';
-  } else {
+  } 
+  else {
       return 'Invalid user data received';
   }
 
