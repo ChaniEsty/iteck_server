@@ -1,8 +1,9 @@
-const sequle=require("./index")
-class CityDataAccessor{
-    constructor() {
-        const DataType=sequle.DataTypes;
-        const CITY = sequle.sequelize.define(
+//const sequle=require("./index")
+module.exports = (sequelize, DataType) => {
+//class CityDataAccessor{
+    //constructor() {
+        //const DataType=sequle.DataTypes;
+        const CITY = sequelize.define(
             "city",
             {
                 idCity: {
@@ -17,9 +18,10 @@ class CityDataAccessor{
             timestamps: false,
             }
         );
+        return CITY;
     }
    
-    }
+   // }
   
-const cityDataAccessor = new CityDataAccessor();
-module.exports = cityDataAccessor;
+// const cityDataAccessor = new CityDataAccessor();
+// module.exports = cityDataAccessor;

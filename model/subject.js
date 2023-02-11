@@ -1,7 +1,8 @@
-const sequle=require("./index")
-class SubjectDataAccessor{
-    constructor() {
-        const DataType=sequle.DataTypes;
+// const sequle=require("./index")
+// class SubjectDataAccessor{
+//     constructor() {
+//         const DataType=sequle.DataTypes;
+module.exports = (sequelize, DataType) => {
         const SUBJECT = sequle.sequelize.define(
             "subject",
             {
@@ -17,9 +18,9 @@ class SubjectDataAccessor{
             timestamps: false,
             }
         );
-    
+    return SUBJECT;
     }
    
-    }
-const subjectDataAccessor = new SubjectDataAccessor();
-module.exports = subjectDataAccessor;
+//     }
+// const subjectDataAccessor = new SubjectDataAccessor();
+// module.exports = subjectDataAccessor;

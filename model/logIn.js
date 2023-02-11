@@ -1,8 +1,9 @@
-const sequle=require("./index")
-class LogInDataAccessor{
-    constructor() {
-        const DataType=sequle.DataTypes;
-        const LOGIN = sequle.sequelize.define(
+// const sequle=require("./index")
+// class LogInDataAccessor{
+//     constructor() {
+//         const DataType=sequle.DataTypes;
+module.exports = (sequelize, DataType) => {
+        const LOGIN = sequelize.define(
             "logIn",
             {
                 email: {
@@ -18,9 +19,9 @@ class LogInDataAccessor{
             timestamps: false,
             }
         );
-    
+    return LOGIN;
     }
    
-    }
-const logInDataAccessor = new LogInDataAccessor();
-module.exports = logInDataAccessor;
+//     }
+// const logInDataAccessor = new LogInDataAccessor();
+// module.exports = logInDataAccessor;

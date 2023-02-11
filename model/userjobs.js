@@ -1,7 +1,8 @@
-const sequle=require("./index")
-class UserjobsDataAccessor{
-    constructor() {
-        const DataType=sequle.DataTypes;
+// const sequle=require("./index")
+// class UserjobsDataAccessor{
+//     constructor() {
+//         const DataType=sequle.DataTypes;
+module.exports = (sequelize, DataType) => {
         const USERJOBS = sequle.sequelize.define(
             "userjobs",
             {
@@ -20,10 +21,10 @@ class UserjobsDataAccessor{
             timestamps: false,
             }
         );
-    
+    return USERJOBS;
     }
    
-}
+// }
   
-const userjobsDataAccessor = new UserjobsDataAccessor();
-module.exports = userjobsDataAccessor;
+// const userjobsDataAccessor = new UserjobsDataAccessor();
+// module.exports = userjobsDataAccessor;

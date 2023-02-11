@@ -1,16 +1,17 @@
 //const sequle=require("./index")
-// class EmployerDataAccessor{
-//     constructor() {
+module.exports = (sequelize, DataType) => {
+    //class UserDataAccessor{
+    //constructor() {
         //const DataType=sequle.DataTypes;
-        module.exports = (sequelize, DataType) => {
-        const EMPLOYER = sequelize.define(
-            "employer",
+        const USER = sequelize.define(
+            "user",
             {
                 email: {
                 type: DataType.STRING,
                 allowNull: false,
+                primaryKey:true
                 },
-                idEmp: {
+                idUser: {
                     type: DataType.STRING,
                     allowNull: false,
                 },
@@ -24,17 +25,27 @@
                     type: DataType.STRING,
                     allowNull: false,
                 },
-                
-                
+                field: {
+                    type: DataType.STRING,
+                },
+                subject: {
+                    type: DataType.STRING,
+                },
+                city: {
+                    type: DataType.STRING,
+                },
+                charecters: {
+                    type: DataType.STRING,
+                },
             },
             {
             timestamps: false,
             }
         );
-    return EMPLOYER;
+    return USER;
     }
    
-//     }
+//}
   
-// const employerDataAccessor = new EmployerDataAccessor();
-// module.exports = employerDataAccessor;
+// const userDataAccessor = new UserDataAccessor();
+// module.exports = userDataAccessor;

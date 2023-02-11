@@ -37,10 +37,10 @@ class JobsDataAccessor{
     //db.inventory.find( { $or: [ { quantity: { $lt: 20 } }, { price: 10 } ] } )
     getJobs=(jobsData) => {
         const {field,subject,city}=jobsData;
-        const fields,subjects,citys;
-        field? fields=field.split(","):[];
-        subject? subjects=subject.split(","):[];
-        city? citys=city.split(","):[];
+      
+        const fields= field? field.split(","):[];
+        const subjects= subject? subject.split(","):[];
+        const citys= city? city.split(","):[];
         const jobList=Job.find({"$or":[{"field":{$in:fields}},{"field":""}],"$or":[{"subject":{$in:subjects}},{"subject":""}],"$or":[{"city":{$in:citys}},{"city":""}]})
         return jobList;
         }

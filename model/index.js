@@ -30,7 +30,8 @@ class Sequle{
         this.db.Sequelize = Sequelize
         this.db.sequelize = this.sequelize
 
-        this.db.users  = require('./user').USER//(sequelize, DataTypes)
+        this.db.users  = require('./us')(this.sequelize, DataTypes)
+        //this.db.users  = require('./user').USER//(sequelize, DataTypes)
         this.db.jobs  = require('./job').JOB//(sequelize, DataTypes)
         this.db.employers  = require('./employer').EMPLOYER//(sequelize, DataTypes)
         this.db.fields  = require('./field').FIELD//(sequelize, DataTypes)
