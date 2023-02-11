@@ -9,5 +9,4 @@ app.use("/user",userRouter)
 
 app.listen(PORT, () => {
     console.log("app ruuning");
-    
 });
