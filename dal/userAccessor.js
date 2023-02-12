@@ -36,11 +36,13 @@ class UserDataAccessor{
 //     this.connection=connect.connection;
 // }
 createUser=(userDetails)=> {
-  const{email,idUser,name,phone,password,field,subject,city,charecters} = userDetails
-  const user=User.create({email,idUser,name,phone,password,field,subject,city,charecters})
+  const{email,idUser,name,phone,password,field,subject,city,characters} = userDetails
+  console.log({email,idUser,name,phone,password,field,subject,city,characters})
+  const user=User.create({email,idUser,name,phone,password,field,subject,city,characters})
 
   if (user) { // Created 
-      return 'New user created';
+    console.log(user);
+    return 'New user created';
   } 
   else {
       return 'Invalid user data received';

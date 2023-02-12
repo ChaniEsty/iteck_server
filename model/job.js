@@ -9,7 +9,7 @@ module.exports = (sequelize, DataType) => {
             {
                 idJob: {
                     primaryKey:true,
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                     allowNull: false,
                     autoIncrement:true
                 },
@@ -21,13 +21,13 @@ module.exports = (sequelize, DataType) => {
                     type: DataType.STRING,
                 },
                 field: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                 },
                 subject: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                 },
                 city: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                 },
                 neededCharecters: {
                     type: DataType.STRING,

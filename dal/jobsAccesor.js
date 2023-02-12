@@ -52,10 +52,10 @@ class JobsDataAccessor{
         const cities= city? city.split(","):[];
         // City.hasMany(Job);
         // Job.belongsTo(City)
-        const idCities=await City.find({"city":{$in:cities}},{name=0,id=1})
-        const idSubjects=await Subject.find({"subject":{$in:subjects}},{name=0,id=1})
-        const idFields=await Field.find({"field":{$in:fields}},{name=0,id=1})
-        const jobList=Job.find({"field":{$in:idFields}},{"subject":{$in:idSubjects}},{"city":{$in:idCities}})
+        // const idCities= City.find({"city":{$in:cities}},{name=0,id=1})
+        //const idSubjects= Subject.find({"subject":{$in:subjects}},{name=0,id=1})
+        ///const idFields= Field.find({"field":{$in:fields}},{name=0,id=1})
+       // const jobList=Job.find({"field":{$in:idFields}},{"subject":{$in:idSubjects}},{"city":{$in:idCities}})
         return jobList;
         }
     createJob=(jobDetails) => {

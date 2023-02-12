@@ -17,7 +17,7 @@ class LogInController {
     //         return res.status(400).json({ message: 'Invalid logIn data received' })
     // "    }
         
-    login=="New logIn created"? res.status(201).json({ message: 'New logIn created' }):res.status(400).json({ message: 'Invalid logIn data received' });
+    login=="New user created"? res.status(201).json({ message: 'New logIn created' }):res.status(400).json({ message: 'Invalid logIn data received' });
         }   
       newPassword=async(req,res)=>{
         const password=logInDal.newPassword(req.body);

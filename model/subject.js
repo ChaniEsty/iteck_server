@@ -3,11 +3,11 @@
 //     constructor() {
 //         const DataType=sequle.DataTypes;
 module.exports = (sequelize, DataType) => {
-        const SUBJECT = sequle.sequelize.define(
+        const SUBJECT = sequelize.define(
             "subject",
             {
                 idSubject: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                     allowNull: false,
                 },
                 name: {

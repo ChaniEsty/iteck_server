@@ -7,7 +7,7 @@ module.exports = (sequelize, DataType) => {
             "city",
             {
                 idCity: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                     allowNull: false,
                 },
                 name: {

@@ -3,18 +3,20 @@
 //     constructor() {
 //         const DataType=sequle.DataTypes;
 module.exports = (sequelize, DataType) => {
-        const USERJOBS = sequle.sequelize.define(
+        const USERJOBS = sequelize.define(
             "userjobs",
             {
                 id: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                     allowNull: false,
+                    primaryKey:true,
+                    autoIncrement:true
                 },
                 idJob: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                 },
                 idUser: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                 },
             },
             {

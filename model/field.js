@@ -7,7 +7,7 @@ module.exports = (sequelize, DataType) => {
             "field",
             {
                 idField: {
-                    type: DataType.INT,
+                    type: DataType.INTEGER,
                     allowNull: false,
                 },
                 fieldDiscription: {
