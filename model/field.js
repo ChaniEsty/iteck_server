@@ -7,10 +7,12 @@ module.exports = (sequelize, DataType) => {
             "field",
             {
                 idField: {
+                    primaryKey:true,
                     type: DataType.INTEGER,
                     allowNull: false,
+                    autoIncrement:true
                 },
-                fieldDiscription: {
+                name: {
                     type: DataType.STRING,
                 },
             },

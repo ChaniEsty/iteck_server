@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const city = require('../model/city');
 const db = require('../model/index');
 //const userDataAccessor = require('../model/user');
@@ -45,37 +46,43 @@ class JobsDataAccessor{
 //const users = await User.findAll({ include: Invoice });
 //console.log(JSON.stringify(users, null, 2));
 
-    getJobs=(jobsData) => {
-        const {field,subject,city}=jobsData;
+    getJobs=async(field,subject,city) => {
         const fields= field? field.split(","):[];
         const subjects= subject? subject.split(","):[];
         const cities= city? city.split(","):[];
-        // City.hasMany(Job);
-        // Job.belongsTo(City)
-        // const idCities= City.find({"city":{$in:cities}},{name=0,id=1})
-        //const idSubjects= Subject.find({"subject":{$in:subjects}},{name=0,id=1})
-        ///const idFields= Field.find({"field":{$in:fields}},{name=0,id=1})
-       // const jobList=Job.find({"field":{$in:idFields}},{"subject":{$in:idSubjects}},{"city":{$in:idCities}})
+        const idCities= City.findAll({"city":{$in:cities}}).id;
+        const idSubjects= Subject.findAll({"subject":{$in:subjects}}).id;
+        const idFields= Field.findAll({"field":{$in:fields}}).id;
+        const jobList=Job.findAll({"field":{$in:idFields}},{"subject":{$in:idSubjects}},{"city":{$in:idCities}})
         return jobList;
         }
-    createJob=(jobDetails) => {
-        const{name,genralDiscription,field,subject,city,neededCharecters,company,employerId}=jobDetails
+    createJob=async(jobDetailes) => {
         
-        const job=Job.create({name,genralDiscription,field,subject,city,neededCharecters,company,employerId})
-        if (job) { // Created 
-            userList=User.find({"$or":[{"field":{"$regex":field}},{"field":""}],"$or":[{"subject":{"$regex":subject}},{"subject":""}],"$or":[{"city":{"$regex":city}},{"city":""}]})
-            if(userList!="no documents found")
-                userList.forEach(element => {
-                    //send email
+        console.log("in create job");
+        const job=Job.create(jobDetailes);
+        return job;
+        // if (job) { // Created 
+        //     userList=await User.findAll({"$or":[{field:{"$regex":Field}},{field:""}],"$or":[{subject:{"$regex":subject}},{subject:""}],"$or":[{city:{"$regex":city}},{city:""}]})
+        //     if(userList!="no documents found")
+        //         userList.forEach(element => {
+        //             //send email
                 
-            });
-            return 'New job created';
-        } else {
-            return 'Invalid job data received';
-        }
-        
-    
-        }                            }
+        //     });
+        //     return 'New job created';
+        // } else {
+        //     return 'Invalid job data received';
+        // }
+    }  
+    deleteJob=async(id) =>{
+        const job=await Job.destroy({where:{idjob:id}});
+        console.log(job);
+        return job;
+
+    }  
+    getJobById=async(id) =>{
+        Job.findOne({where:{idjob:id}});
+    }                      
+}
         
 
   const jobsDataAccessor = new JobsDataAccessor();

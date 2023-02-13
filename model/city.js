@@ -7,9 +7,10 @@ module.exports = (sequelize, DataType) => {
             "city",
             {
                 idCity: {
+                    primaryKey:true,
                     type: DataType.INTEGER,
                     allowNull: false,
-                },
+                    autoIncrement:true},
                 name: {
                     type: DataType.STRING,
                 },

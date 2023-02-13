@@ -1,11 +1,12 @@
- const userDal = require("../dal/userAccessor");
-
+const userDal = require("../dal/userAccessor");
+const jobDal=require("../dal/jobsAccesor");
 // const db = require('../model/index')
 // const User = db.db.users
 
 class UserController {
     createUser=async(req,res)=> {
-        const user=userDal.createUser(req.body);
+        const{email,idUser,name,phone,password,field,subject,city,characters} = req.body;
+        const user=await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
         //const { idUser, name, password } = req.body
         // if (!idUser) {
         //     return res.status(400).json({ message: 'All fields are required' })
@@ -16,17 +17,22 @@ class UserController {
         //     return res.status(201).json({ message: 'New user created' })
         // } else {
         //     return res.status(400).json({ message: 'Invalid user data received' })
-        user=="New user created"? res.status(201).json({ message: 'New user created' }):res.status(400).json({ message: 'Invalid user data received' });
+        //user=="New user created"? res.status(201).json({ message: 'New user created' }):res.status(400).json({ message: 'Invalid user data received' });
+        return user;
         }
 
     
     
     updateDetailes=async(req,res)=> {
-        //const {userId,field,subject,city}=req.body;
+        const {userId,field,subject,city}=req.body;
         // const update=User.updateOne({"id":userId},{$set:{"field":field,"subject":subject,"city":city}})
-        const update=userDal.updateDetailes(req.body)
+        const update=await userDal.updateDetailes(userId,field,subject,city)
+        if(update=="updated"){
+           const jobList=await jobDal.getJobs(field,subject,city);
+           res.json(jobList) ;
+        }
         //jobsDal.getJobs({field,subject,city});
-        res.send(update);
+        res.json(update);
 
     }
     

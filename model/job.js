@@ -20,16 +20,16 @@ module.exports = (sequelize, DataType) => {
                 genralDiscription: {
                     type: DataType.STRING,
                 },
-                field: {
+                idField: {
                     type: DataType.INTEGER,
                 },
-                subject: {
+                idSubject: {
                     type: DataType.INTEGER,
                 },
-                city: {
+                idCity: {
                     type: DataType.INTEGER,
                 },
-                neededCharecters: {
+                neededCharacters: {
                     type: DataType.STRING,
                 },
                 company: {

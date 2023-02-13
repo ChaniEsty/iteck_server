@@ -1,27 +1,30 @@
 const db = require('../model/index')
 const LogIn = db.db.logIns
 const userDal = require("../dal/userAccessor");
+const { where } = require('sequelize');
 
 class LogInDataAccessor{
-    createLogIn=(logInDetails) => {
+    createLogIn=async(logInDetails) => {
         const{email,idUser,name,phone,password,field,subject,city,characters}=logInDetails;
         if (!email|| !idUser|| !password) {
             return 'All fields are required';
         }
         else
         {
-            const logIn=LogIn.create({email,password})
+            console.log("in create log");
+            const logIn=await LogIn.create({email,password});
             
             if (logIn) { // Created
-                console.log("i managed"+logIn); 
-                const user=userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters})
-                if(user!="New user created")
-                {
-                    LogIn.deleteOne({"email":email});
-                    return user;
-                }
-                else
-                    return user;
+                return "logIn created";
+                //console.log("i managed"+logIn); 
+                // const user= await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
+                // if(user!="New user created")
+                // {
+                //     LogIn.destroy({where:{"email":email}});
+                //     return user;
+                // }
+                // else
+                //     return user;
             } 
             else 
             {
@@ -29,10 +32,14 @@ class LogInDataAccessor{
             }
         }
     }  
-    newPassword=(email)=>{
-       const password=LogIn.find({"email":email});
-       if(password)
+    newPassword=async(email)=>{
+       //console.log("in dal email: ",email)
+       const password=await LogIn.findOne({where:{email:email}})
+       if(password){
+            console.log("password",password)
             return password.password;
+
+       }
        else
             return "wrong email";
     }     

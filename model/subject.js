@@ -7,6 +7,8 @@ module.exports = (sequelize, DataType) => {
             "subject",
             {
                 idSubject: {
+                    primaryKey:true,
+                    autoIncrement:true,
                     type: DataType.INTEGER,
                     allowNull: false,
                 },

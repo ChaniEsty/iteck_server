@@ -28,18 +28,22 @@
 // //   });
 //    }
 //var connect=require("/connection.js")
+const { where } = require("sequelize");
 const jobsDal = require("../dal/jobsAccesor");
 const db = require('../model/index')
 const User = db.db.users
+const {Op}=require("sequelize");
 class UserDataAccessor{
 //   constructor() {
 //     this.connection=connect.connection;
 // }
-createUser=(userDetails)=> {
-  const{email,idUser,name,phone,password,field,subject,city,characters} = userDetails
-  console.log({email,idUser,name,phone,password,field,subject,city,characters})
-  const user=User.create({email,idUser,name,phone,password,field,subject,city,characters})
-
+createUser=async(userDetails)=> {
+  console.log("in create user");
+  
+  //console.log({email,idUser,name,phone,password,field,subject,city,characters})
+  
+  const user=await User.create(userDetails);
+  
   if (user) { // Created 
     console.log(user);
     return 'New user created';
@@ -50,14 +54,22 @@ createUser=(userDetails)=> {
 
 }
 
-updateDetailes=(updateData)=> {
-  const {userId,field,subject,city}=updateData;
-  const update=User.updateOne({"id":userId},{$set:{"field":field,"subject":subject,"city":city}})
+updateDetailes=async(userId,field,subject,city)=> {
+  const update=await User.updateOne({where:{id:userId}},{$set:{"field":field,"subject":subject,"city":city}});
   if (update.modifiedCount==0)
-      return "didn't update"
-  const jobList=jobsDal.getJobs({field,subject,city});
-  return jobList;
+    return "didn't update";
+  else
+    return "updated";
+  
 
+}
+getUsers=async(field,subject,city)=>{
+  const userList=await User.findAll({where:
+    { [Op.or]:{field:field,field:""},
+      [Op.or]:{subject:subject,subject:""},
+      [Op.or]:{city:city,city:""}
+    }});
+  return userList;
 }
 //  createUser=async(userData) => {
 

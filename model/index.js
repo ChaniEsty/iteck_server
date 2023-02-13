@@ -24,7 +24,7 @@ class Sequle{
         this.sequelize.authenticate().then(() => {
             console.log('Connection has been established successfully.');
         }).catch((error) => {
-            console.error('Unable to connect to the database: ', error);
+            console.error('Unable to connect to the database: 😢', error);
         });
     
         this.db.Sequelize = Sequelize
@@ -41,7 +41,7 @@ class Sequle{
         this.db.logIns  = require('./logIn')(this.sequelize, DataTypes)
         this.db.sequelize.sync({ force: false })
         .then(() => {
-            console.log('yes re-sync done!')
+            console.log('Its working😁😊👍!')
         })
     }
 }
