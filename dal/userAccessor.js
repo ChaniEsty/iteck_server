@@ -51,9 +51,7 @@ createUser=async(userDetails)=> {
   else {
       return 'Invalid user data received';
   }
-
 }
-
 updateDetailes=async(userId,field,subject,city)=> {
   const update=await User.updateOne({where:{id:userId}},{$set:{"field":field,"subject":subject,"city":city}});
   if (update.modifiedCount==0)
@@ -64,10 +62,11 @@ updateDetailes=async(userId,field,subject,city)=> {
 
 }
 getUsers=async(field,subject,city)=>{
+ // User.findAll({where:{[Op.and]:{[Op.or]:{field:field,field:""},[Op.or]:{subject:subject,subject:""}}}})
   const userList=await User.findAll({where:
-    { [Op.or]:{field:field,field:""},
+    {[Op.and]:{ [Op.or]:{field:field,field:""},
       [Op.or]:{subject:subject,subject:""},
-      [Op.or]:{city:city,city:""}
+      [Op.or]:{city:city,city:""}}
     }});
   return userList;
 }

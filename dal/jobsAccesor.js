@@ -46,14 +46,37 @@ class JobsDataAccessor{
 //const users = await User.findAll({ include: Invoice });
 //console.log(JSON.stringify(users, null, 2));
 
+
+
+//###############################################################
+//Job.belongsToMany()
+// User.belongsToMany(Team, { through: 'users_teams'});
+// Team.belongsToMany(User, { through: 'users_teams'});
+
+// Folder.belongsToMany(Team, { through: 'teams_folders'});
+// Team.belongsToMany(Folder, { through: 'teams_folders'});
+// You should be able to load everything in one go using nested includes:
+
+// User.findAll({
+//   include: [
+//     {
+//       model: Team, 
+//       include: [
+//         Folder
+//       ]  
+//     }
+//   ]
+// });
+//###############################################################
     getJobs=async(field,subject,city) => {
         const fields= field? field.split(","):[];
         const subjects= subject? subject.split(","):[];
         const cities= city? city.split(","):[];
-        const idCities= City.findAll({"city":{$in:cities}}).id;
-        const idSubjects= Subject.findAll({"subject":{$in:subjects}}).id;
-        const idFields= Field.findAll({"field":{$in:fields}}).id;
-        const jobList=Job.findAll({"field":{$in:idFields}},{"subject":{$in:idSubjects}},{"city":{$in:idCities}})
+
+        // const idCities= City.findAll({where:{"city":{$in:cities}}}).id;
+        // const idSubjects= Subject.findAll({where:{"subject":{$in:subjects}}}).id;
+        // const idFields= Field.findAll({where:{"field":{$in:fields}}}).id;
+        const jobList=Job.findAll({where:{"field":{$in:idFields},"subject":{$in:idSubjects},"city":{$in:idCities}}})
         return jobList;
         }
     createJob=async(jobDetailes) => {
@@ -80,7 +103,8 @@ class JobsDataAccessor{
 
     }  
     getJobById=async(id) =>{
-        Job.findOne({where:{idjob:id}});
+        const job=Job.findOne({where:{idjob:id}});
+        return job;
     }                      
 }
         
