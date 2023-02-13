@@ -1,4 +1,5 @@
 const dbConfig = require('../config/dbConfig');
+const {applyExtraSetup}=require("./extra-setup");
 const {Sequelize, DataTypes} = require('sequelize');
 class Sequle{
     sequelize = new Sequelize(
@@ -39,7 +40,8 @@ class Sequle{
         this.db.subjects  = require('./subject')(this.sequelize, DataTypes)
         this.db.usersjobs  = require('./userjobs')(this.sequelize, DataTypes)
         this.db.logIns  = require('./logIn')(this.sequelize, DataTypes)
-        this.db.sequelize.sync({ force: false })
+        applyExtraSetup();
+        this.db.sequelize.sync({ alter: true })
         .then(() => {
             console.log('Its working😁😊👍!')
         })

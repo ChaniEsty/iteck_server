@@ -14,6 +14,7 @@ module.exports = (sequelize, DataType) => {
                 idUser: {
                     type: DataType.STRING,
                     allowNull: false,
+                    unique:true
                 },
                 name: {
                     type: DataType.STRING,
@@ -26,13 +27,13 @@ module.exports = (sequelize, DataType) => {
                     allowNull: false,
                 },
                 field: {
-                    type: DataType.STRING,
+                    type: DataType.TEXT,
                 },
                 subject: {
-                    type: DataType.STRING,
+                    type: DataType.TEXT,
                 },
                 city: {
-                    type: DataType.STRING,
+                    type: DataType.TEXT,
                 },
                 characters: {
                     type: DataType.STRING,

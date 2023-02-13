@@ -14,9 +14,11 @@ module.exports = (sequelize, DataType) => {
                 },
                 idJob: {
                     type: DataType.INTEGER,
+                    allowNull:false
                 },
                 idUser: {
                     type: DataType.INTEGER,
+                    allowNull:false
                 },
             },
             {

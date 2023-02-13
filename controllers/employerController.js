@@ -20,6 +20,9 @@ class EmployerController {
 
         
     }
+    getJobs=async(req,res)=>{
+        
+    }
 
     
 }

@@ -18,7 +18,7 @@ module.exports = (sequelize, DataType) => {
                     type: DataType.STRING,
                 },
                 genralDiscription: {
-                    type: DataType.STRING,
+                    type: DataType.TEXT,
                 },
                 idField: {
                     type: DataType.INTEGER,
