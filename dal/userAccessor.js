@@ -43,14 +43,14 @@ createUser=async(userDetails)=> {
   //console.log({email,idUser,name,phone,password,field,subject,city,characters})
   
   const user=await User.create(userDetails);
-  
-  if (user) { // Created 
-    console.log(user);
-    return 'New user created';
-  } 
-  else {
-      return 'Invalid user data received';
-  }
+  return user;
+  // if (user) { // Created 
+  //   console.log(user);
+  //   return 'New user created';
+  // } 
+  // else {
+  //     return 'Invalid user data received';
+  // }
 }
 duplicate=async(email)=>{
   const duplicate = await User.findOne({where:{email:email}});

@@ -16,7 +16,12 @@ class UserController {
         }
         const hashedPwd = await bcrypt.hash(password, 10);
         const userObject={email,idUser,name,phone,password:hashedPwd,field,subject,city,characters}
-        const user=await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
+        const user=await userDal.createUser(userObject);
+        if (user) { // Created 
+            return res.status(201).json({ message: 'New user created' })
+        }
+        else {
+            return res.status(400).json({ message: 'Invalid user data received' })
         //const { idUser, name, password } = req.body
         // if (!idUser) {
         //     return res.status(400).json({ message: 'All fields are required' })
