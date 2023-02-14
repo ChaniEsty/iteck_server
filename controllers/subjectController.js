@@ -7,11 +7,11 @@ class SubjectController {
         const subjectList=await subjectDal.getSubjects();
         res.json(subjectList);
      }
-     addSubject=async(req,res) => {
-        const{name}=req.body;
-        const subject=await subjectDal.addSubject(name);
-        res.json(subject);
-      } 
+    //  addSubject=async(req,res) => {
+    //     const{name}=req.body;
+    //     const subject=await subjectDal.addSubject(name);
+    //     res.json(subject);
+    //   } 
                                                                                                        
 }
 const subjectController = new SubjectController();

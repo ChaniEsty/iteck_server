@@ -55,7 +55,7 @@ class JobsController {
     //     }
       } 
       deleteJob=async(req,res) =>{
-         const jobDelete=jobsDal.deleteJob(req.params.id);
+         const jobDelete=await jobsDal.deleteJob(req.params.id);
          
       }  
       getJobById=async(req,res)=>{

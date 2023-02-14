@@ -42,7 +42,11 @@ class UserController {
     updateDetailes=async(req,res)=> {
         const {userId,field,subject,city}=req.body;
         // const update=User.updateOne({"id":userId},{$set:{"field":field,"subject":subject,"city":city}})
-        const update=await userDal.updateDetailes(userId,field,subject,city)
+        const update=await userDal.updateDetailes(userId,field,subject,city)ף
+        if (update.modifiedCount==0)
+    return "didn't update";
+  else
+    return "updated";
         if(update=="updated"){
            const jobList=await jobDal.getJobs(field,subject,city);
            res.json(jobList) ;

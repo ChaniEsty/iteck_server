@@ -58,12 +58,7 @@ duplicate=async(email)=>{
 }
 updateDetailes=async(userId,field,subject,city)=> {
   const update=await User.updateOne({where:{id:userId}},{$set:{"field":field,"subject":subject,"city":city}});
-  if (update.modifiedCount==0)
-    return "didn't update";
-  else
-    return "updated";
-  
-
+  return update;
 }
 getUsers=async(field,subject,city)=>{
  // User.findAll({where:{[Op.and]:{[Op.or]:{field:field,field:""},[Op.or]:{subject:subject,subject:""}}}})
