@@ -2,28 +2,30 @@
 // class EmployerDataAccessor{
 //     constructor() {
         //const DataType=sequle.DataTypes;
-        module.exports = (sequelize, DataType) => {
+        const { sequelize, DataTypes } = require("./sequelize");
+
+        // module.exports = (sequelize, DataType) => {
         const EMPLOYER = sequelize.define(
             "employer",
             {
                 email: {
                 primaryKey:true,
-                type: DataType.STRING,
+                type: DataTypes.STRING,
                 allowNull: false,
                 },
                 idEmp: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                     allowNull: false,
                     unique:true
                 },
                 name: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
                 phone: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
                 password: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                     allowNull: false,
                 },
                 
@@ -33,10 +35,11 @@
             timestamps: false,
             }
         );
-    return EMPLOYER;
-    }
+    // return EMPLOYER;
+    // }
    
 //     }
   
 // const employerDataAccessor = new EmployerDataAccessor();
 // module.exports = employerDataAccessor;
+ module.exports = EMPLOYER;

@@ -1,5 +1,7 @@
 //const sequle=require("./index")
-module.exports = (sequelize, DataType) => {
+const { sequelize, DataTypes } = require("./sequelize");
+
+//module.exports = (sequelize, DataType) => {
 //class CityDataAccessor{
     //constructor() {
         //const DataType=sequle.DataTypes;
@@ -8,21 +10,22 @@ module.exports = (sequelize, DataType) => {
             {
                 idCity: {
                     primaryKey:true,
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                     autoIncrement:true},
                 name: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
             },
             {
             timestamps: false,
             }
         );
-        return CITY;
-    }
+    //     return CITY;
+    // }
    
    // }
   
 // const cityDataAccessor = new CityDataAccessor();
 // module.exports = cityDataAccessor;
+module.exports = CITY;

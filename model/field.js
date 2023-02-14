@@ -2,27 +2,30 @@
 // class FieldDataAccessor{
 //     constructor() {
 //         const DataType=sequle.DataTypes;
-module.exports = (sequelize, DataType) => {
+const { sequelize, DataTypes } = require("./sequelize");
+
+// module.exports = (sequelize, DataType) => {
         const FIELD = sequelize.define(
             "field",
             {
                 idField: {
                     primaryKey:true,
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                     autoIncrement:true
                 },
                 name: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
             },
             {
             timestamps: false,
             }
         );
-    return FIELD;
-    }
+    // return FIELD;
+    // }
    
 //     }
 // const fieldDataAccessor = new FieldDataAccessor();
 // module.exports = fieldDataAccessor;
+module.exports = FIELD;

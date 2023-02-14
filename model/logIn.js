@@ -2,17 +2,19 @@
 // class LogInDataAccessor{
 //     constructor() {
 //         const DataType=sequle.DataTypes;
-module.exports = (sequelize, DataType) => {
+const { sequelize, DataTypes } = require("./sequelize");
+
+// module.exports = (sequelize, DataType) => {
         const LOGIN = sequelize.define(
             "logIn",
             {
                 email: {
                 primaryKey:true,
-                type: DataType.STRING,
+                type: DataTypes.STRING,
                 allowNull: false,
                 },
                 password: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                     allowNull:false
                 },
                 
@@ -21,9 +23,10 @@ module.exports = (sequelize, DataType) => {
             timestamps: false,
             }
         );
-    return LOGIN;
-    }
+    // return LOGIN;
+    // }
    
 //     }
 // const logInDataAccessor = new LogInDataAccessor();
 // module.exports = logInDataAccessor;
+module.exports = LOGIN;

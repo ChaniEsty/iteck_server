@@ -1,5 +1,6 @@
-const sequle=require("./index");
-const sequelize=sequle.sequelize
+//const sequle=require("./index");
+//const sequelize=sequle.sequelize
+const { sequelize } = require("./sequelize");
 class Connections{
     applyExtraSetup=()=>{
         const {USER,EMPLOYER,JOB,CITY,FIELD,SUBJECT,LOGIN,USERJOB}=sequelize.models;
@@ -20,4 +21,4 @@ class Connections{
     }
 }
 const connections=new Connections;
-module.exports=connections.applyExtraSetup;
+module.exports=connections;

@@ -1,6 +1,8 @@
 const { UniqueConstraintError } = require("sequelize");
 //const sequle=require("./index")
-module.exports = (sequelize, DataType) => {
+const { sequelize, DataTypes } = require("./sequelize");
+
+// module.exports = (sequelize, DataType) => {
 //class JobsDataAccessor{
     //constructor() {
         //const DataType=sequle.DataTypes;
@@ -9,35 +11,35 @@ module.exports = (sequelize, DataType) => {
             {
                 idJob: {
                     primaryKey:true,
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                     autoIncrement:true
                 },
                 name: {
                     
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
                 genralDiscription: {
-                    type: DataType.TEXT,
+                    type: DataTypes.TEXT,
                 },
                 idField: {
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                 },
                 idSubject: {
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                 },
                 idCity: {
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                 },
                 neededCharacters: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
                 company: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                     allowNull: false,
                 },
                 employerId: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                     allowNull: false,
                 },
             },
@@ -45,9 +47,10 @@ module.exports = (sequelize, DataType) => {
             timestamps: false,
             }
         );
-    return JOB;
-    }
+    // return JOB;
+    // }
    
 //}
 // const jobsDataAccessor = new JobsDataAccessor();
 // module.exports = jobsDataAccessor;
+module.exports = JOB;

@@ -2,22 +2,24 @@
 // class UserjobsDataAccessor{
 //     constructor() {
 //         const DataType=sequle.DataTypes;
-module.exports = (sequelize, DataType) => {
+const { sequelize, DataTypes } = require("./sequelize");
+
+// module.exports = (sequelize, DataType) => {
         const USERJOBS = sequelize.define(
             "userjobs",
             {
                 id: {
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                     allowNull: false,
                     primaryKey:true,
                     autoIncrement:true
                 },
                 idJob: {
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                     allowNull:false
                 },
                 idUser: {
-                    type: DataType.INTEGER,
+                    type: DataTypes.INTEGER,
                     allowNull:false
                 },
             },
@@ -25,10 +27,11 @@ module.exports = (sequelize, DataType) => {
             timestamps: false,
             }
         );
-    return USERJOBS;
-    }
+    // return USERJOBS;
+    // }
    
 // }
   
 // const userjobsDataAccessor = new UserjobsDataAccessor();
 // module.exports = userjobsDataAccessor;
+module.exports = USERJOBS;

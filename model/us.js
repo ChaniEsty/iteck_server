@@ -1,52 +1,54 @@
 //const sequle=require("./index")
-module.exports = (sequelize, DataType) => {
-    //class UserDataAccessor{
-    //constructor() {
-        //const DataType=sequle.DataTypes;
+const { sequelize, DataTypes } = require("./sequelize");
+
+// class UserDataAccessor{
+//     constructor() {
+        
         const USER = sequelize.define(
             "user",
             {
                 email: {
-                type: DataType.STRING,
+                type: DataTypes.STRING,
                 allowNull: false,
                 primaryKey:true
                 },
                 idUser: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                     allowNull: false,
                     unique:true
                 },
                 name: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
                 phone: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
                 password: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                     allowNull: false,
                 },
                 field: {
-                    type: DataType.TEXT,
+                    type: DataTypes.TEXT,
                 },
                 subject: {
-                    type: DataType.TEXT,
+                    type: DataTypes.TEXT,
                 },
                 city: {
-                    type: DataType.TEXT,
+                    type: DataTypes.TEXT,
                 },
                 characters: {
-                    type: DataType.STRING,
+                    type: DataTypes.STRING,
                 },
             },
             {
             timestamps: false,
             }
         );
-    return USER;
-    }
+    // return USER;
+    // }
    
 //}
   
 // const userDataAccessor = new UserDataAccessor();
-// module.exports = userDataAccessor;
+//module.exports = userDataAccessor;
+module.exports = USER;
