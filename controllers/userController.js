@@ -22,6 +22,7 @@ class UserController {
         }
         else {
             return res.status(400).json({ message: 'Invalid user data received' })
+        }
         //const { idUser, name, password } = req.body
         // if (!idUser) {
         //     return res.status(400).json({ message: 'All fields are required' })
