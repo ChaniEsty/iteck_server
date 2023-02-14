@@ -2,10 +2,20 @@ const userDal = require("../dal/userAccessor");
 const jobDal=require("../dal/jobsAccesor");
 // const db = require('../model/index')
 // const User = db.db.users
+const bcrypt= require('bcrypt');
 
 class UserController {
     createUser=async(req,res)=> {
         const{email,idUser,name,phone,password,field,subject,city,characters} = req.body;
+        if (!email||!idUser||!password) {
+                 return res.status(400).json({ message: 'All fields are required' });
+        }
+        const duplicate=userDal.duplicate(email);
+        if(duplicate){
+            return res.status(409).json({message:"Duplicate username"});
+        }
+        const hashedPwd = await bcrypt.hash(password, 10);
+        const userObject={email,idUser,name,phone,password:hashedPwd,field,subject,city,characters}
         const user=await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
         //const { idUser, name, password } = req.body
         // if (!idUser) {

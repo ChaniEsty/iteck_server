@@ -52,6 +52,10 @@ createUser=async(userDetails)=> {
       return 'Invalid user data received';
   }
 }
+duplicate=async(email)=>{
+  const duplicate = await User.findOne({where:{email:email}});
+  return duplicate;
+}
 updateDetailes=async(userId,field,subject,city)=> {
   const update=await User.updateOne({where:{id:userId}},{$set:{"field":field,"subject":subject,"city":city}});
   if (update.modifiedCount==0)
