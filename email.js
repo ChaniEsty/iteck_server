@@ -1,12 +1,12 @@
 var nodemailer = require('nodemailer');
 
-class Email{
-    sendEmail=(user,job)=>{
-        console.log("sending mail",user);
+class Email {
+    sendEmail = (user, job) => {
+        console.log("sending mail", user);
         var transporter = nodemailer.createTransport({
             service: 'outlook',
             auth: {
-                user:  process.env.USER_MAIL,
+                user: process.env.USER_MAIL,
                 pass: process.env.PASSWORD_MAIL
             }
         });
@@ -16,18 +16,18 @@ class Email{
             subject: `A new job just for you `,
             text: job.dataValues,
         };
-        transporter.sendMail(mailOptions,function(error, info){
-           
+        transporter.sendMail(mailOptions, function (error, info) {
+
             if (error) {
-              console.log("sending mail",error);
-            } 
+                console.log("sending mail", error);
+            }
             else {
-               
-              console.log('Email sent: ' + info.response);
+
+                console.log('Email sent: ' + info.response);
             }
         });
     }
 }
 
-const email=new Email();
-module.exports=email;
+const email = new Email();
+module.exports = email;

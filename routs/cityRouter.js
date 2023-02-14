@@ -6,4 +6,4 @@ cityRouter.route("/")
     .get(cityController.getCities)
 
 
-module.exports=cityRouter;
+module.exports = cityRouter;

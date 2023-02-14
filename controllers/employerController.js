@@ -3,9 +3,9 @@
 const employerDal = require("../dal/employerAccessor");
 
 class EmployerController {
-    createEmployer=async(req,res)=> {
-        const employer=employerDal.createEmployer(req.body);
-        employer=="New employer created"? res.status(201).json({ message: 'New employer created' }): res.status(400).json({ message: 'Invalid employer data received' })
+    createEmployer = async (req, res) => {
+        const employer = employerDal.createEmployer(req.body);
+        employer == "New employer created" ? res.status(201).json({ message: 'New employer created' }) : res.status(400).json({ message: 'Invalid employer data received' })
         //const { idUser, name, password } = req.body
         // if (!idUser) {
         //     return res.status(400).json({ message: 'All fields are required' })
@@ -17,14 +17,10 @@ class EmployerController {
         // } else {
         //     return res.status(400).json({ message: 'Invalid user data received' })
         // }
-
-        
     }
-    getJobs=async(req,res)=>{
-        
-    }
+    getJobs = async (req, res) => {
 
-    
+    }
 }
 const employerController = new EmployerController();
 module.exports = employerController;

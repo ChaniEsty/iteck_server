@@ -6,4 +6,4 @@ subjectRouter.route("/")
     .get(subjectController.getSubjects)
 
 
-module.exports=subjectRouter;
+module.exports = subjectRouter;

@@ -6,4 +6,4 @@ userRouter.route("/")
     .put(userController.updateDetailes)
 
 
-    module.exports=userRouter;
+module.exports = userRouter;

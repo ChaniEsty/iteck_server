@@ -5,4 +5,4 @@ const employersController = require("../controllers/employerController");
 const employersRouter = express.Router();
 employersRouter.route("/:id").get(employersController.getJobs)
 
-module.exports=employersRouter;
+module.exports = employersRouter;
