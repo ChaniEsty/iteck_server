@@ -3,6 +3,8 @@
 const logInDal = require("../dal/logInAccessor");
 const userCon = require("../controllers/userController");
 const bcrypt = require('bcrypt');
+const jwt= require('jsonwebtoken');
+
 class LogInController {
   logIn = async (req, res) => {
     const { email, password } = req.body;
@@ -11,18 +13,22 @@ class LogInController {
         message: 'All fields are required'
       })
     }
-    const foundUser = await logInDal.findUser(username);
+    const foundUser = await logInDal.findUser(email);
     if (!foundUser) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
     const match = await bcrypt.compare(password, foundUser.password);
     if (!match) return res.status(401).json({ message: 'Unauthorized' });
-    res.send("Logged In");
+    const userInfo= {email:foundUser.email,iduser:foundUser.iduser,name:foundUser.name,phone:foundUser.phone,password:foundUser.password,field:foundUser.field 
+      ,subject:foundUser.subject, city:foundUser.city,characters:foundUser.characters} 
+      const accessToken = jwt.sign(userInfo,process.env.JWT_PASSWORD);
+      res.json({accessToken:accessToken});
   }
   createLogIn = async (req, res) => {
-    const { email, idUser, name, phone, password, field, subject, city, characters } = req.body;
-    if (!email || !idUser || !password) {
-      return 'All fields are required';
+    const { email, iduser, name, phone, password, field, subject, city, characters } = req.body;
+    console.log(email,iduser,password);
+    if (!email || !iduser || !password) {
+      return res.status(400).json('All fields are required');
     }
     else {
       const duplicate = await logInDal.duplicate(email);
@@ -45,9 +51,12 @@ class LogInController {
             res.status(201).json("new user created");
         }
         else
-          {res.status(400).json('Invalid logIn data received');}
+        {
+          res.status(400).json('Invalid logIn data received');
+        }
       }
     }
+    
     //console.log("i managed"+logIn); 
     // const user= await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
     // if(user!="New user created")

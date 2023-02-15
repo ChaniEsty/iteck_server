@@ -12,6 +12,7 @@ class LogInDataAccessor {
     }
     duplicate = async (email) => {
         const duplicate = await LogIn.findOne({ where: { email: email } });
+        console.log('in dup',duplicate);
         return duplicate;
     }
     newPassword = async (email) => {
@@ -20,7 +21,7 @@ class LogInDataAccessor {
         return password;
     }
     findUser = async (username) => {
-        const user = await LogIn.findOne({ where: { username: username } });
+        const user = await LogIn.findOne({ where: { email: username } });
         return user;
     }
     delete = async (email) => {
