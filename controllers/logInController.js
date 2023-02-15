@@ -2,23 +2,61 @@
 // const LogIn = db.db.logIns
 const logInDal = require("../dal/logInAccessor");
 const userCon = require("../controllers/userController");
+const bcrypt = require('bcrypt');
 class LogInController {
-
-  createLogIn = async (req, res) => {
-    const login = await logInDal.createLogIn(req.body);
-    if (login == "logIn created") {
-      const user = userCon.createUser(req, res);
-      if (user != "New user created") {
-        logInDal.delete();
-        res.status(400).json({ message: user });
-      }
-      else
-        res.status(201).json({ message: user })
+  logIn = async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        message: 'All fields are required'
+      })
     }
-    else
-      res.status(400).json({ message: login });
-
-
+    const foundUser = await logInDal.findUser(username);
+    if (!foundUser) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const match = await bcrypt.compare(password, foundUser.password);
+    if (!match) return res.status(401).json({ message: 'Unauthorized' });
+    res.send("Logged In");
+  }
+  createLogIn = async (req, res) => {
+    const { email, idUser, name, phone, password, field, subject, city, characters } = req.body;
+    if (!email || !idUser || !password) {
+      return 'All fields are required';
+    }
+    else {
+      const duplicate = await logInDal.duplicate(email);
+      console.log(duplicate);
+      if (duplicate) {
+        return res.status(409).json({ message: "Duplicate username" });
+      }
+      else {
+        console.log("in create log");
+        const hashedPwd = await bcrypt.hash(password, 10);
+        const userObject = { email, password: hashedPwd };
+        const login = await logInDal.createLogIn(userObject);
+        if (login) { // Created
+          const user = await userCon.createUser(req, res);
+          if (!user) {
+            logInDal.delete(email);
+            res.status(400).json('Invalid user data received');
+          }
+          else
+            res.status(201).json("new user created");
+        }
+        else
+          {res.status(400).json('Invalid logIn data received');}
+      }
+    }
+    //console.log("i managed"+logIn); 
+    // const user= await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
+    // if(user!="New user created")
+    // {
+    //     LogIn.destroy({where:{"email":email}});
+    //     return user;
+    // }
+    // else
+    //     return user;
 
     //     const{idJob,name,genralDiscription,field,subject,city,neededCharecters,company,employerId}=req.body
 
@@ -35,8 +73,18 @@ class LogInController {
   newPassword = async (req, res) => {
     //console.log("in controller login",req.query.email)
     const password = await logInDal.newPassword(req.query.email);
-    console.log("in controller", password);
-    res.json(password);
+    if (password) {
+      console.log("password", password)
+      const newPassword = require('crypto').randomBytes(4).toString('hex');
+      res.json(newPassword);
+
+    }
+    else
+      return "wrong email";
+  }
+  try = () => {
+    return "try";
+
   }
 }
 const logInController = new LogInController();

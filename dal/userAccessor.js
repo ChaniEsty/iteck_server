@@ -49,10 +49,7 @@ class UserDataAccessor {
     //     return 'Invalid user data received';
     // }
   }
-  duplicate = async (email) => {
-    const duplicate = await User.findOne({ where: { email: email } });
-    return duplicate;
-  }
+ 
   updateDetailes = async (userId, field, subject, city) => {
     const update = await User.updateOne({ where: { id: userId } }, { $set: { "field": field, "subject": subject, "city": city } });
     return update;
@@ -71,6 +68,7 @@ class UserDataAccessor {
     });
     return userList;
   }
+  
   //  createUser=async(userData) => {
 
   //     this.connection.query(`INSERT INTO user (idUsers, name) VALUES (${userData["idUser"]},${userData["name"]})`, 

@@ -19,7 +19,7 @@ const USERJOBS = sequelize.define(
             allowNull: false
         },
         idUser: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
     },

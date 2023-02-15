@@ -1,6 +1,6 @@
 const { where, Op } = require('sequelize');
 const CITY = require('../model/city');
-const city = require('../model/city');
+//const city = require('../model/city');
 const FIELD = require('../model/field');
 const db = require('../model/index');
 const SUBJECT = require('../model/subject');
@@ -76,7 +76,7 @@ class JobsDataAccessor {
     // if(author_id) where.author_id= author_id
     // if(q) where.name= { [Op.like]:`%${q}%` }
     getJobs = async (field, subject, city) => {
-        let where = {}
+        let where = {};
 
         const fields = field ? field.split(",") : null;
         const subjects = subject ? subject.split(",") : null;
@@ -94,7 +94,7 @@ class JobsDataAccessor {
                 { model: FIELD, as: 'field', attributes: ['name'] },
                 { model: SUBJECT, as: 'subject', attributes: ['name'] }],
             where: { [Op.and]: where }
-        })
+        });
         // const idCities= City.findAll({where:{"city":{$in:cities}}}).id;
         // const idSubjects= Subject.findAll({where:{"subject":{$in:subjects}}}).id;
         // const idFields= Field.findAll({where:{"field":{$in:fields}}}).id;
