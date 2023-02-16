@@ -1,8 +1,10 @@
 // const db = require('../model/index')
 // const LogIn = db.db.logIns
 const logInDal = require("../dal/logInAccessor");
-const userCon = require("../controllers/userController");
-const empCon = require("../controllers/employerController");
+const userDal = require("../dal/userAccessor");
+//const userCon = require("../controllers/userController");
+//const empCon = require("../controllers/employerController");
+const employerDal = require("../dal/employerAccessor");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -28,7 +30,7 @@ class LogInController {
     res.json({ accessToken: accessToken });
   }
   createLogIn = async (req, res) => {
-    const { email, iduser, name, phone, password, field, subject, city, characters, role } = req.body;
+    const { email, iduser, name, phone, password,role } = req.body;
     console.log(email, iduser, password);
     if (!email || !iduser || !password) {
       return res.status(400).json('All fields are required');
@@ -42,11 +44,12 @@ class LogInController {
       else {
         console.log("in create log");
         const hashedPwd = await bcrypt.hash(password, 10);
-        const userObject = { email, password: hashedPwd };
-        const login = await logInDal.createLogIn(userObject);
+        const loginObject = { email, password: hashedPwd };
+        const login = await logInDal.createLogIn(loginObject);
         if (login) { // Created
-          if (role == 'employer') 
-            {const employer = await empCon.createEmployer(req, res); 
+          if (role == 'employer')
+           {const empObject={email, idEmp:iduser, name, phone, password:hashedPwd};
+            const employer = await employerDal.createEmployer(empObject); 
             if (!employer) {
                 logInDal.delete(email);
                 res.status(400).json('Invalid employer data received');
@@ -56,7 +59,8 @@ class LogInController {
               //res.status(201).json("new employer created");
           }
           else{
-            const user = await userCon.createUser(req, res);
+            const userObject={email,iduser, name, phone, password:hashedPwd};
+            const user = await userDal.createUser(userObject);
             if (!user) {
               logInDal.delete(email);
               res.status(400).json('Invalid user data received');
@@ -112,10 +116,7 @@ class LogInController {
     else
       return "wrong email";
   }
-  try = () => {
-    return "try";
-
-  }
+ 
 }
 const logInController = new LogInController();
 module.exports = logInController;

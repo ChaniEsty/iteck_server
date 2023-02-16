@@ -1,14 +1,14 @@
 // const db = require('../model/index')
 // const Employer = db.db.employers
 const employerDal = require("../dal/employerAccessor");
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 class EmployerController {
-    createEmployer = async (req, res) => {
-        const { email, iduser, name, phone, password, field, subject, city, characters } = req.body;
-        const hashedPwd = await bcrypt.hash(password, 10);
-        const employerObject = { email, idEmp:iduser, name, phone, password: hashedPwd, field, subject, city, characters };
-         const employer = employerDal.createEmployer(employerObject);
-        return employer;
+    // createEmployer = async (employerObject) => {
+    //     // const { email, iduser, name, phone, password } = req.body;
+    //     // const hashedPwd = await bcrypt.hash(password, 10);
+    //     // const employerObject = { email, idEmp:iduser, name, phone, password: hashedPwd };
+    //      const employer = employerDal.createEmployer(employerObject);
+    //     return employer;
        
         
         //const { idUser, name, password } = req.body
@@ -22,7 +22,7 @@ class EmployerController {
         // } else {
         //     return res.status(400).json({ message: 'Invalid user data received' })
         // }
-    }
+    // }
     getJobs = async (req, res) => {
         const idEmp=req.params;
         console.log("in getjobs",idEmp);

@@ -3,21 +3,25 @@
 const { sequelize } = require("./sequelize");
 class Connections {
     applyExtraSetup = () => {
-        // const { USER, EMPLOYER, JOB, CITY, FIELD, SUBJECT, LOGIN, USERJOB } = sequelize.models;
-        // JOB.belongsTo(EMPLOYER, { foreignKey: "employerId", as: "employer" });
-        // EMPLOYER.hasMany(JOB, { foreignKey: "employerId", as: "job" });
-        // // JOB.belongsTo(USER,{foreignKey:"employerId",as:"employer"});
-        // // USER.hasMany(JOB);
-        // // JOB.hasMany(USER);
-        // // USER.belongsTo(JOB);
-        // USER.belongsTo(LOGIN, { foreignKey: "email", as: "login" });
-        // LOGIN.hasOne(USER, { foreignKey: "email", as: "user" });
-        // CITY.hasMany(JOB, { foreignKey: "idCity", as: "job" });
-        // JOB.belongsTo(CITY, { foreignKey: "idCity", as: "city" });
-        // FIELD.hasMany(JOB, { foreignKey: "idField", as: "job" });
-        // JOB.belongsTo(FIELD, { foreignKey: "idField", as: "field" });
-        // SUBJECT.hasMany(JOB, { foreignKey: "idSubject", as: "job" });
-        // JOB.belongsTo(SUBJECT, { foreignKey: "idSubject", as: "subject" });
+        console.log(sequelize);
+        const { city, field, user, job, employer, subject, userjobs, logIn } = sequelize.models;
+
+        //const { USER, EMPLOYER, JOB, CITY, FIELD, SUBJECT, LOGIN, USERJOBS } = sequelize.models;
+        //console.log(USER, EMPLOYER, JOB, CITY, FIELD, SUBJECT, LOGIN, USERJOBS);
+        job.belongsTo(employer, { foreignKey: "employerId", as: "employer" });
+        employer.hasMany(job, { foreignKey: "employerId", as: "job" });
+        // JOB.belongsTo(USER,{foreignKey:"employerId",as:"employer"});
+        // USER.hasMany(JOB);
+        // JOB.hasMany(USER);
+        // USER.belongsTo(JOB);
+        user.belongsTo(logIn, { foreignKey: "email", as: "login" });
+        logIn.hasOne(user, { foreignKey: "email", as: "user" });
+        city.hasMany(job, { foreignKey: "idCity", as: "job" });
+        job.belongsTo(city, { foreignKey: "idCity", as: "city" });
+        field.hasMany(job, { foreignKey: "idField", as: "job" });
+        job.belongsTo(field, { foreignKey: "idField", as: "field" });
+        subject.hasMany(job, { foreignKey: "idSubject", as: "job" });
+        job.belongsTo(subject, { foreignKey: "idSubject", as: "subject" });
     }
 }
 const connections = new Connections;

@@ -42,7 +42,7 @@ class Sequle {
         this.db.usersjobs = require('./userjobs')//(this.sequelize, DataTypes)
         this.db.logIns = require('./logIn')//(this.sequelize, DataTypes)
         applyExtraSetup.applyExtraSetup();
-        this.db.sequelize.sync({ alter: true })
+        this.db.sequelize.sync({ alter:true})
             .then(() => {
                 console.log('Its working😁😊👍!')
             })
