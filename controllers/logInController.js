@@ -2,8 +2,9 @@
 // const LogIn = db.db.logIns
 const logInDal = require("../dal/logInAccessor");
 const userCon = require("../controllers/userController");
+const empCon = require("../controllers/employerController");
 const bcrypt = require('bcrypt');
-const jwt= require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 class LogInController {
   logIn = async (req, res) => {
@@ -19,14 +20,16 @@ class LogInController {
     }
     const match = await bcrypt.compare(password, foundUser.password);
     if (!match) return res.status(401).json({ message: 'Unauthorized' });
-    const userInfo= {email:foundUser.email,iduser:foundUser.iduser,name:foundUser.name,phone:foundUser.phone,password:foundUser.password,field:foundUser.field 
-      ,subject:foundUser.subject, city:foundUser.city,characters:foundUser.characters} 
-      const accessToken = jwt.sign(userInfo,process.env.JWT_PASSWORD);
-      res.json({accessToken:accessToken});
+    const userInfo = {
+      email: foundUser.email, iduser: foundUser.iduser, name: foundUser.name, phone: foundUser.phone, password: foundUser.password, field: foundUser.field
+      , subject: foundUser.subject, city: foundUser.city, characters: foundUser.characters
+    }
+    const accessToken = jwt.sign(userInfo, process.env.JWT_PASSWORD);
+    res.json({ accessToken: accessToken });
   }
   createLogIn = async (req, res) => {
-    const { email, iduser, name, phone, password, field, subject, city, characters } = req.body;
-    console.log(email,iduser,password);
+    const { email, iduser, name, phone, password, field, subject, city, characters, role } = req.body;
+    console.log(email, iduser, password);
     if (!email || !iduser || !password) {
       return res.status(400).json('All fields are required');
     }
@@ -42,21 +45,39 @@ class LogInController {
         const userObject = { email, password: hashedPwd };
         const login = await logInDal.createLogIn(userObject);
         if (login) { // Created
-          const user = await userCon.createUser(req, res);
-          if (!user) {
-            logInDal.delete(email);
-            res.status(400).json('Invalid user data received');
+          if (role == 'employer') 
+            {const employer = await empCon.createEmployer(req, res); 
+            if (!employer) {
+                logInDal.delete(email);
+                res.status(400).json('Invalid employer data received');
+            }
+            else
+              this.logIn(req,res);
+              //res.status(201).json("new employer created");
           }
-          else
-            res.status(201).json("new user created");
+          else{
+            const user = await userCon.createUser(req, res);
+            if (!user) {
+              logInDal.delete(email);
+              res.status(400).json('Invalid user data received');
+            }
+            else
+              this.logIn(req,res);
+              //res.status(201).json("new user created");
+          }
+          // const userInfo = {
+          //   email, iduser, name, phone, password, field
+          //   , subject, city, characters
+          // }
+          // const accessToken = jwt.sign(userInfo, process.env.JWT_PASSWORD);
+          // res.json({ accessToken: accessToken });
         }
-        else
-        {
+        else {
           res.status(400).json('Invalid logIn data received');
         }
       }
     }
-    
+
     //console.log("i managed"+logIn); 
     // const user= await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
     // if(user!="New user created")

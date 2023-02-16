@@ -1,11 +1,16 @@
 // const db = require('../model/index')
 // const Employer = db.db.employers
 const employerDal = require("../dal/employerAccessor");
-
+const bcrypt = require('bcrypt');
 class EmployerController {
     createEmployer = async (req, res) => {
-        const employer = employerDal.createEmployer(req.body);
-        employer == "New employer created" ? res.status(201).json({ message: 'New employer created' }) : res.status(400).json({ message: 'Invalid employer data received' })
+        const { email, iduser, name, phone, password, field, subject, city, characters } = req.body;
+        const hashedPwd = await bcrypt.hash(password, 10);
+        const employerObject = { email, idEmp:iduser, name, phone, password: hashedPwd, field, subject, city, characters };
+         const employer = employerDal.createEmployer(employerObject);
+        return employer;
+       
+        
         //const { idUser, name, password } = req.body
         // if (!idUser) {
         //     return res.status(400).json({ message: 'All fields are required' })
@@ -19,7 +24,13 @@ class EmployerController {
         // }
     }
     getJobs = async (req, res) => {
-
+        const idEmp=req.params;
+        console.log("in getjobs",idEmp);
+        const jobs=employerDal.getJobs(idEmp.id);
+        if(jobs==null)
+            res.status(400).json('invalid id');
+        else
+            res.status(201).json({"jobs":jobs});
     }
 }
 const employerController = new EmployerController();

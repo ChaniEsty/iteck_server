@@ -49,7 +49,7 @@ class UserDataAccessor {
     //     return 'Invalid user data received';
     // }
   }
- 
+
   updateDetailes = async (userId, field, subject, city) => {
     const update = await User.updateOne({ where: { id: userId } }, { $set: { "field": field, "subject": subject, "city": city } });
     return update;
@@ -59,16 +59,19 @@ class UserDataAccessor {
     const userList = await User.findAll({
       where:
       {
-        [Op.and]: {
-          [Op.or]: { field: { [Op.like]: `%${field}%` }, field: "" },
-          [Op.or]: { subject: { [Op.like]: `%${subject}%` }, subject: "" },
-          [Op.or]: { city: { [Op.like]: `%${city}%` }, city: "" }
-        }
+        [Op.and]: [{
+          [Op.or]: [{ field: { [Op.like]: `%${field}%` }}, {field: "" }]
+        },
+        {
+          [Op.or]: [{ subject: { [Op.like]: `%${subject}%` }},{ subject: "" }]
+        },
+        { [Op.or]: [{ city: { [Op.like]: `%${city}%` }}, {city: "" }] }
+        ]
       }
     });
     return userList;
   }
-  
+
   //  createUser=async(userData) => {
 
   //     this.connection.query(`INSERT INTO user (idUsers, name) VALUES (${userData["idUser"]},${userData["name"]})`, 
