@@ -13,7 +13,6 @@ class CitiesDataAccessor {
         else
             return cityExist;
     }
-    //deleteCity=async()
     getCities = async () => {
         const cityList = await City.findAll();
         return cityList;

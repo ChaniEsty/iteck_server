@@ -1,10 +1,4 @@
-// const sequle=require("./index")
-// class UserjobsDataAccessor{
-//     constructor() {
-//         const DataType=sequle.DataTypes;
 const { sequelize, DataTypes } = require("./sequelize");
-
-// module.exports = (sequelize, DataType) => {
 const USERJOBS = sequelize.define(
     "userjobs",
     {
@@ -27,11 +21,5 @@ const USERJOBS = sequelize.define(
         timestamps: false,
     }
 );
-// return USERJOBS;
-// }
 
-// }
-
-// const userjobsDataAccessor = new UserjobsDataAccessor();
-// module.exports = userjobsDataAccessor;
 module.exports = USERJOBS;

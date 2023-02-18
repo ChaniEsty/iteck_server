@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require("express");
-//const logIn = require('./model/logIn');
 const userRouter = require("./routs/userRouter");
 const logInRouter = require("./routs/logInRouter");
 const jobRouter = require("./routs/jobsRouter");

@@ -1,11 +1,5 @@
 const { UniqueConstraintError } = require("sequelize");
-//const sequle=require("./index")
 const { sequelize, DataTypes } = require("./sequelize");
-
-// module.exports = (sequelize, DataType) => {
-//class JobsDataAccessor{
-//constructor() {
-//const DataType=sequle.DataTypes;
 const JOB = sequelize.define(
     "job",
     {
@@ -47,10 +41,5 @@ const JOB = sequelize.define(
         timestamps: false,
     }
 );
-// return JOB;
-// }
 
-//}
-// const jobsDataAccessor = new JobsDataAccessor();
-// module.exports = jobsDataAccessor;
 module.exports = JOB;

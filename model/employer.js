@@ -1,10 +1,5 @@
-//const sequle=require("./index")
-// class EmployerDataAccessor{
-//     constructor() {
-//const DataType=sequle.DataTypes;
 const { sequelize, DataTypes } = require("./sequelize");
 
-// module.exports = (sequelize, DataType) => {
 const EMPLOYER = sequelize.define(
     "employer",
     {
@@ -35,11 +30,5 @@ const EMPLOYER = sequelize.define(
         timestamps: false,
     }
 );
-// return EMPLOYER;
-// }
 
-//     }
-
-// const employerDataAccessor = new EmployerDataAccessor();
-// module.exports = employerDataAccessor;
 module.exports = EMPLOYER;

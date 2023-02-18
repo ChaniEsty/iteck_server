@@ -1,10 +1,4 @@
-//const sequle=require("./index")
 const { sequelize, DataTypes } = require("./sequelize");
-
-//module.exports = (sequelize, DataType) => {
-//class CityDataAccessor{
-//constructor() {
-//const DataType=sequle.DataTypes;
 const CITY = sequelize.define(
     "city",
     {
@@ -22,11 +16,5 @@ const CITY = sequelize.define(
         timestamps: false,
     }
 );
-//     return CITY;
-// }
 
-// }
-
-// const cityDataAccessor = new CityDataAccessor();
-// module.exports = cityDataAccessor;
 module.exports = CITY;

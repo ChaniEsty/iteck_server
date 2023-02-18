@@ -1,9 +1,5 @@
-// const db = require('../model/index')
-// const LogIn = db.db.logIns
 const logInDal = require("../dal/logInAccessor");
 const userDal = require("../dal/userAccessor");
-//const userCon = require("../controllers/userController");
-//const empCon = require("../controllers/employerController");
 const employerDal = require("../dal/employerAccessor");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -56,7 +52,6 @@ class LogInController {
             }
             else
               this.logIn(req,res);
-              //res.status(201).json("new employer created");
           }
           else{
             const userObject={email,iduser, name, phone, password:hashedPwd};
@@ -67,45 +62,15 @@ class LogInController {
             }
             else
               this.logIn(req,res);
-              //res.status(201).json("new user created");
           }
-          // const userInfo = {
-          //   email, iduser, name, phone, password, field
-          //   , subject, city, characters
-          // }
-          // const accessToken = jwt.sign(userInfo, process.env.JWT_PASSWORD);
-          // res.json({ accessToken: accessToken });
         }
         else {
           res.status(400).json('Invalid logIn data received');
         }
       }
     }
-
-    //console.log("i managed"+logIn); 
-    // const user= await userDal.createUser({email,idUser,name,phone,password,field,subject,city,characters});
-    // if(user!="New user created")
-    // {
-    //     LogIn.destroy({where:{"email":email}});
-    //     return user;
-    // }
-    // else
-    //     return user;
-
-    //     const{idJob,name,genralDiscription,field,subject,city,neededCharecters,company,employerId}=req.body
-
-    //     if (!idJob) {
-    //         return res.status(400).json({ message: 'All fields are required' })
-    //     }
-    //     const logIn=LogIn.create({email,password})
-    //    if (logIn) { // Created 
-    //         return res.status(201).json({ message: 'New logIn created' })
-    //     } else {
-    //         return res.status(400).json({ message: 'Invalid logIn data received' })
-    // "    }
   }
   newPassword = async (req, res) => {
-    //console.log("in controller login",req.query.email)
     const password = await logInDal.newPassword(req.query.email);
     if (password) {
       console.log("password", password)

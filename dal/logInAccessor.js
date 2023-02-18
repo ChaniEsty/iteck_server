@@ -16,7 +16,6 @@ class LogInDataAccessor {
         return duplicate;
     }
     newPassword = async (email) => {
-        //console.log("in dal email: ",email)
         const password = await LogIn.findOne({ where: { email: email } })
         return password;
     }

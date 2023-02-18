@@ -4,19 +4,11 @@ const subjectDal = require("../dal/subjectAccessor");
 const fieldDal = require("../dal/fieldAccessor");
 const userDal = require("../dal/userAccessor");
 const email = require("../email");
-// const db = require('../model/index')
-// const Job = db.db.jobs
 
 class JobsController {
    getJobs = async (req, res) => {
       const { field, subject, city } = req.query;
       const jobList = await jobsDal.getJobs(field, subject, city);
-      //  const fields,subjects,citys;
-      //  field? fields=field.split(","):[];
-      //  subject? subjects=subject.split(","):[];
-
-      //  city? citys=city.split(","):[];
-      //  const jobList=Job.find({"city":{$in:citys},"field":{$in:fields},"subject":{$in:subjects}})
       res.json(jobList);
    }
    createJob = async (req, res) => {
@@ -28,7 +20,6 @@ class JobsController {
       const idSubject = s.idSubject;
       const f = await fieldDal.addField(field);
       const idField = f.idField;
-      //console.log("in create job",f,s,c);
       const job = await jobsDal.createJob({ name, genralDiscription, idField, idSubject, idCity, neededCharacters, company, employerId });
       if (job) { // Created 
          const userList = await userDal.getUsers(field, subject, city);
@@ -43,24 +34,11 @@ class JobsController {
       else {
          res.status(400).json({ message: 'Invalid job data received' })
       }
-      //     const{name,genralDiscription,field,subject,city,neededCharecters,company,employerId}=req.body
-      //     if (!idJob) {
-      //         return res.status(400).json({ message: 'All fields are required' })
-      //     }
-      //     const job=Job.create({name,genralDiscription,field,subject,city,neededCharecters,company,employerId})
-      //    if (job) { // Created 
-      //         return res.status(201).json({ message: 'New job created' })
-      //     } else {
-      //         return res.status(400).json({ message: 'Invalid job data received' })
-      //     }
    }
    deleteJob = async (req, res) => {
       const jobDelete = await jobsDal.deleteJob(req.params.id);
 
    }
-   // getJobById = async (req, res) => {
-
-   // }
 }
 const jobsController = new JobsController();
 module.exports = jobsController;

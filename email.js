@@ -12,7 +12,7 @@ class Email {
         });
         var mailOptions = {
             from: process.env.USER_MAIL,
-            to: user,//"36214429441@mby.co.il",
+            to: user,
             subject: `A new job just for you `,
             text: job.dataValues.toString(),
         };
