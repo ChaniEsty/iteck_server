@@ -22,11 +22,11 @@ class JobsController {
       const idField = f.idField;
       const job = await jobsDal.createJob({ name, genralDiscription, idField, idSubject, idCity, neededCharacters, company, employerId });
       if (job) { // Created 
-         const userList = await userDal.getUsers(field, subject, city);
+         const userList = await userDal.getUsersAccordingToJob(field, subject, city);
          if (userList)
             console.log(userList, "userList");
          userList.forEach(user => {
-            email.sendEmail(user.dataValues.email, job);
+            email.sendEmail(user.dataValues.email, "A new job just for you",job.dataValues.toString());
          });
 
          res.status(201).json({ message: 'New job created' })

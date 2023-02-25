@@ -5,7 +5,8 @@ const verifyJWT = require("../middleware/verifyJWT")
 
 
 userRouter.route("/")
-    .put(verifyJWT,userController.updateDetailes)
-
-
+    .post(verifyJWT,userController.sendCv)
+    .patch(verifyJWT,userController.updateDetailes)
+userRouter.route("/job")
+    .patch(verifyJWT,userController.updateJobRequirments)
 module.exports = userRouter;

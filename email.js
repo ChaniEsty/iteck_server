@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 
 class Email {
-    sendEmail = (user, job) => {
+    sendEmail = (addressee, subject,text) => {
         console.log("sending email", user);
         var transporter = nodemailer.createTransport({
             service: 'outlook',
@@ -13,8 +13,8 @@ class Email {
         var mailOptions = {
             from: process.env.USER_MAIL,
             to: user,
-            subject: `A new job just for you `,
-            text: job.dataValues.toString(),
+            subject: subject,
+            text: text,
         };
         transporter.sendMail(mailOptions, function (error, info) {
 
