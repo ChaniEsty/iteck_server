@@ -9,7 +9,7 @@ const USER = sequelize.define(
         },
         iduser: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             // unique: true
         },
         name: {

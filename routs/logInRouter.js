@@ -2,8 +2,11 @@ const express = require("express");
 const logInController = require("../controllers/logInController");
 const logInRouter = express.Router();
 
-logInRouter.route("/register").post(logInController.createLogIn)
+logInRouter.route("/signIn")
+.get("string ")
     .post(logInController.logIn)
+    
+logInRouter.route("/")
+    .post(logInController.createLogIn)
     .get(logInController.newPassword)
-
 module.exports = logInRouter;
