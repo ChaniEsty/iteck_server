@@ -3,20 +3,26 @@ const userDal = require("../dal/userAccessor");
 const employerDal = require("../dal/employerAccessor");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const validation=require("validator");
 class LogInController {
   logIn = async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    debugger;
+    const { signInEmail, signInPassword } = req.body;
+    if (!signInEmail || !signInPassword) {
       return res.status(400).json({
         message: 'All fields are required'
       })
     }
-    const foundUser = await logInDal.findUser(email);
+    if(!validation.email(signInEmail))
+      return res.status(400).json({
+        message: 'wrong input'
+      })
+
+    const foundUser = await logInDal.findUser(signInEmail);
     if (!foundUser) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-    const match = await bcrypt.compare(password, foundUser.password);
+    const match = await bcrypt.compare(signInPassword, foundUser.password);
     if (!match) return res.status(401).json({ message: 'Unauthorized' });
     const userInfo = {
       email: foundUser.email, iduser: foundUser.iduser, name: foundUser.name, phone: foundUser.phone, password: foundUser.password, field: foundUser.field
@@ -73,9 +79,10 @@ class LogInController {
   newPassword = async (req, res) => {
     const password = await logInDal.newPassword(req.query.email);
     if (password) {
-      console.log("password", password)
+      //console.log("password", password)
       const newPassword = require('crypto').randomBytes(4).toString('hex');
-      res.json(newPassword);
+      sendEmail(req.query.email,"new password",newPassword);
+      res.json("new password has been sent");
 
     }
     else

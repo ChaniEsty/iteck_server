@@ -3,7 +3,7 @@ const jobDal = require("../dal/jobsAccesor");
 //const bcrypt = require('bcrypt');
 const verifyJWT = require("../middleware/verifyJWT");
 const email = require("../email");
-
+//const valid=require("v")
 class UserController {
     getUsers=async(req,res)=>{
         const users=await userDal.getUsers();

@@ -4,6 +4,7 @@ const Employer = db.db.employers
 const Job=db.db.jobs;
 class EmployerDataAccessor {
     createEmployer = async (employerDetails) => {
+        debugger;
         const employer = await Employer.create(employerDetails);
         return employer;
     }

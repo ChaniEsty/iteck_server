@@ -12,7 +12,7 @@ class Email {
         });
         var mailOptions = {
             from: process.env.USER_MAIL,
-            to: user,
+            to: addressee,
             subject: subject,
             text: text,
         };

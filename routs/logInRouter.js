@@ -3,7 +3,6 @@ const logInController = require("../controllers/logInController");
 const logInRouter = express.Router();
 
 logInRouter.route("/signIn")
-.get("string ")
     .post(logInController.logIn)
     
 logInRouter.route("/")
