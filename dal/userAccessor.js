@@ -6,7 +6,6 @@ const { Op } = require("sequelize");
 class UserDataAccessor {
 
   createUser = async (userDetails) => {
-    console.log("in create user");
     const user = await User.create(userDetails);
     return user;
   }
@@ -14,9 +13,9 @@ class UserDataAccessor {
     const destroyed = await User.destroy({ where: { id: idUserToDelete } });
     return destroyed;
   }
-  updateDetailes = async (userToUpdate) => {
+  updateDetailes = async (id,userToUpdate) => {
     const { email, iduser, name, phone, password } = userToUpdate;
-    const update = await User.updateOne({ where: { id: userToUpdate.userId } }, { $set: { email: email, name: name, phone: phone, password: password } });
+    const update = await User.updateOne({ where: { id: id } }, { $set: { email: email, iduser:iduser,name: name, phone: phone, password: password } });
     return update;
   }
   updateJobRequirments = async (userId, field, subject, city) => {

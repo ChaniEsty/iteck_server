@@ -7,5 +7,6 @@ jobsRouter.route("/")
         .get(jobsController.getJobs)
         .post(verifyJWT,jobsController.createJob)
 
-jobsRouter.route("/:id").delete(jobsController.deleteJob)
+jobsRouter.route("/:id").
+        delete(jobsController.deleteJob)
 module.exports = jobsRouter;

@@ -3,7 +3,7 @@ const userDal = require("../dal/userAccessor");
 const employerDal = require("../dal/employerAccessor");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const validation=require("validator");
+const validation = require("validator");
 class LogInController {
   logIn = async (req, res) => {
     debugger;
@@ -13,7 +13,7 @@ class LogInController {
         message: 'All fields are required'
       })
     }
-    if(!validation.email(signInEmail))
+    if (!validation.email(signInEmail))
       return res.status(400).json({
         message: 'wrong input'
       })
@@ -32,13 +32,17 @@ class LogInController {
     res.json({ accessToken: accessToken });
   }
   createLogIn = async (req, res) => {
-    const { email, iduser, name, phone, password,role } = req.body;
-    console.log(email, iduser, password);
-    if (!email || !iduser || !password) {
+    const { email, iduser, name, phone, password, role } = req.body;
+    if (!email || !iduser || !password)
       return res.status(400).json('All fields are required');
-    }
+    if (!validation.email(email))
+      return res.status(400).send('wrong email');
+    if (!validation.id(iduser))
+      return res.status(400).send('wrong id');
+    if (!validation.phone(phone))
+      return res.status(400).send('wrong phone number');
     else {
-      const duplicate = await logInDal.duplicate(email);
+      const duplicate = await logInDal.findUser(email);
       console.log(duplicate);
       if (duplicate) {
         return res.status(409).json({ message: "Duplicate username" });
@@ -49,25 +53,25 @@ class LogInController {
         const loginObject = { email, password: hashedPwd };
         const login = await logInDal.createLogIn(loginObject);
         if (login) { // Created
-          if (role == 'employer')
-           {const empObject={email, idEmp:iduser, name, phone, password:hashedPwd};
-            const employer = await employerDal.createEmployer(empObject); 
+          if (role == 'employer') {
+            const empObject = { email, idEmp: iduser, name, phone, password: hashedPwd };
+            const employer = await employerDal.createEmployer(empObject);
             if (!employer) {
-                logInDal.delete(email);
-                res.status(400).json('Invalid employer data received');
+              logInDal.delete(email);
+              res.status(400).json('Invalid employer data received');
             }
             else
-              this.logIn(req,res);
+              this.logIn(req, res);
           }
-          else{
-            const userObject={email,iduser, name, phone, password:hashedPwd};
+          else {
+            const userObject = { email, iduser, name, phone, password: hashedPwd };
             const user = await userDal.createUser(userObject);
             if (!user) {
               logInDal.delete(email);
               res.status(400).json('Invalid user data received');
             }
             else
-              this.logIn(req,res);
+              this.logIn(req, res);
           }
         }
         else {
@@ -77,18 +81,21 @@ class LogInController {
     }
   }
   newPassword = async (req, res) => {
-    const password = await logInDal.newPassword(req.query.email);
+    const email = req.query;
+    if (!email)
+      res.statuse(400).send("no email");
+    if (!validation.email(email))
+      return res.status(400).send('wrong email');
+    const password = await logInDal.findUser(email);
     if (password) {
-      //console.log("password", password)
       const newPassword = require('crypto').randomBytes(4).toString('hex');
-      sendEmail(req.query.email,"new password",newPassword);
+      sendEmail(email, "new password", newPassword);
       res.json("new password has been sent");
-
     }
     else
-      return "wrong email";
+      res.statuse(400).send("can't create password try again");
   }
- 
+
 }
 const logInController = new LogInController();
 module.exports = logInController;

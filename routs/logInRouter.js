@@ -7,5 +7,6 @@ logInRouter.route("/signIn")
     
 logInRouter.route("/")
     .post(logInController.createLogIn)
+logInRouter.route("/:id/password")
     .get(logInController.newPassword)
 module.exports = logInRouter;

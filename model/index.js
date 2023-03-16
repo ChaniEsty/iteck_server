@@ -17,7 +17,7 @@ class Sequle {
         this.db.subjects = require('./subject')
         this.db.usersjobs = require('./userjobs')
         this.db.logIns = require('./logIn')
-        this.db.complaintes = require('./usersComplaints')
+        this.db.inquiries = require('./usersInquiries')
         applyExtraSetup.applyExtraSetup();
         this.db.sequelize.sync({ alter:true})
             .then(() => {

@@ -1,12 +1,12 @@
 const { sequelize, DataTypes } = require("./sequelize");
-const USERCOMPLAINTES = sequelize.define(
-    "usersComplaintes",
+const USERINQUIRIES = sequelize.define(
+    "usersInquiries",
     {
-        complainte: {
+        inquiry: {
             type: DataTypes.TEXT,
         },
     },
     
 );
 
-module.exports = USERCOMPLAINTES;
+module.exports = USERINQUIRIES;

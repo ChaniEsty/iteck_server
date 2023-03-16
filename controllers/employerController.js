@@ -4,7 +4,6 @@ class EmployerController {
    
     getJobs = async (req, res) => {
         const idEmp=req.params;
-        console.log("in getjobs",idEmp);
         const jobs=employerDal.getJobs(idEmp.id);
         if(jobs==null)
             res.status(400).json('invalid id');

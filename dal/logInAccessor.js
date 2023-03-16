@@ -1,30 +1,25 @@
 const db = require('../model/index')
 const LogIn = db.db.logIns
-const userDal = require("../dal/userAccessor");
 const { where } = require('sequelize');
-const email = require('../email');
 
 class LogInDataAccessor {
-    createLogIn = async (logInDetails) => {
-        console.log("in acc", logInDetails.email)
-        const logIn = await LogIn.create(logInDetails);
-        return logIn;
+    getLogIns=async ()=>{
+        return await LogIn.findAll();
     }
-    duplicate = async (email) => {
-        const duplicate = await LogIn.findOne({ where: { email: email } });
-        console.log('in dup',duplicate);
-        return duplicate;
+    createLogIn = async (logIn) => {
+        return await LogIn.create(logIn);
     }
-    newPassword = async (email) => {
-        const password = await LogIn.findOne({ where: { email: email } })
-        return password;
-    }
+    // duplicate = async (email) => {
+    //     return await LogIn.findOne({ where: { email: email } });
+    // }
+    // newPassword = async (email) => {
+    //     return await LogIn.findOne({ where: { email: email } })
+    // }
     findUser = async (username) => {
-        const user = await LogIn.findOne({ where: { email: username } });
-        return user;
+        return await LogIn.findOne({ where: { email: username } });
     }
     delete = async (email) => {
-        LogIn.destroy({ where: { email: email } });
+        await LogIn.destroy({ where: { email: email } });
     }
 }
 const logInDataAccessor = new LogInDataAccessor();

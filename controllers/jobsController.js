@@ -14,7 +14,6 @@ class JobsController {
    createJob = async (req, res) => {
       const { name, genralDiscription, field, subject, city, neededCharacters, company, employerId } = req.body;
       const c = await cityDal.addCity(city);
-      console.log("in cj", c);
       const idCity = c.idCity;
       const s = await subjectDal.addSubject(subject);
       const idSubject = s.idSubject;
@@ -24,10 +23,9 @@ class JobsController {
       if (job) { // Created 
          const userList = await userDal.getUsersAccordingToJob(field, subject, city);
          if (userList)
-            console.log(userList, "userList");
-         userList.forEach(user => {
-            email.sendEmail(user.dataValues.email, "A new job just for you",job.dataValues.toString());
-         });
+            userList.forEach(user => {
+               email.sendEmail(user.dataValues.email, "A new job just for you", job.dataValues.toString());
+            });
 
          res.status(201).json({ message: 'New job created' })
       }
@@ -36,8 +34,8 @@ class JobsController {
       }
    }
    deleteJob = async (req, res) => {
-      const jobDelete = await jobsDal.deleteJob(req.params.id);
-
+      await jobsDal.deleteJob(req.params.id);
+      res.send("job deleted");
    }
 }
 const jobsController = new JobsController();

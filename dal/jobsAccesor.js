@@ -32,8 +32,6 @@ class JobsDataAccessor {
        return jobs;
     }
     createJob = async (jobDetailes) => {
-
-        console.log("in create job");
         const job = Job.create(jobDetailes);
         return job;
     }

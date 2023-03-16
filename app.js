@@ -9,7 +9,7 @@ const employerRouter = require("./routs/employerRouter");
 const cityRouter = require("./routs/cityRouter");
 const fieldRouter = require("./routs/fieldRouter");
 const subjectRouter = require("./routs/subjectRouter");
-const complaintesRouter=require("./routs/")
+const inquiriesRouter=require("./routs/inquiriesRouter");
 const app = express();
 const PORT = process.env.PORT || 3600;
 app.use(cors(corsOptions));
@@ -21,7 +21,7 @@ app.use("/employer", employerRouter);
 app.use("/city", cityRouter);
 app.use("/field", fieldRouter);
 app.use("/subject", subjectRouter);
-app.use("/complaintes", complaintesRouter);
+app.use("/inquiries", inquiriesRouter);
 
 app.listen(PORT, () => {
     console.log("app ruuning");
