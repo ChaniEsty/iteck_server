@@ -26,6 +26,7 @@ class UserDataAccessor {
     const users = User.findAll();
     return users;
   }
+  
   getUsersAccordingToJob = async (field, subject, city) => {
     const userList = await User.findAll({
       where:

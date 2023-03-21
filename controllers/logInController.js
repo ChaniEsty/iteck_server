@@ -13,10 +13,10 @@ class LogInController {
         message: 'All fields are required'
       })
     }
-    if (!validation.email(signInEmail))
-      return res.status(400).json({
-        message: 'wrong input'
-      })
+    // if (!validation.email(signInEmail))
+    //   return res.status(400).json({
+    //     message: 'wrong input'
+    //   })
 
     const foundUser = await logInDal.findUser(signInEmail);
     if (!foundUser) {
@@ -29,26 +29,27 @@ class LogInController {
       , subject: foundUser.subject, city: foundUser.city, characters: foundUser.characters
     }
     const accessToken = jwt.sign(userInfo, process.env.JWT_PASSWORD);
-    res.json({ accessToken: accessToken });
+    res.send({ accessToken: accessToken });
   }
   createLogIn = async (req, res) => {
+    debugger;
     const { email, iduser, name, phone, password, role } = req.body;
     if (!email || !iduser || !password)
-      return res.status(400).json('All fields are required');
-    if (!validation.email(email))
-      return res.status(400).send('wrong email');
-    if (!validation.id(iduser))
-      return res.status(400).send('wrong id');
-    if (!validation.phone(phone))
-      return res.status(400).send('wrong phone number');
+    {console.log("testing")
+      return res.status(400).json('All fields are required');}
+    // if (!validation.email(email))
+    //   return res.status(400).send('wrong email');
+    // if (!validation.id(iduser))
+    //   return res.status(400).send('wrong id');
+    // if (!validation.phone(phone))
+    //   return res.status(400).send('wrong phone number');
     else {
+      console.log("testing")
       const duplicate = await logInDal.findUser(email);
-      console.log(duplicate);
       if (duplicate) {
         return res.status(409).json({ message: "Duplicate username" });
       }
       else {
-        console.log("in create log");
         const hashedPwd = await bcrypt.hash(password, 10);
         const loginObject = { email, password: hashedPwd };
         const login = await logInDal.createLogIn(loginObject);
@@ -60,8 +61,10 @@ class LogInController {
               logInDal.delete(email);
               res.status(400).json('Invalid employer data received');
             }
-            else
-              this.logIn(req, res);
+            else{
+              res.status(200).json("employer added");
+              // this.logIn(req, res);
+            }
           }
           else {
             const userObject = { email, iduser, name, phone, password: hashedPwd };
@@ -70,8 +73,10 @@ class LogInController {
               logInDal.delete(email);
               res.status(400).json('Invalid user data received');
             }
-            else
-              this.logIn(req, res);
+            else{
+              res.status(200).json("user added");
+              // this.logIn(req, res);
+            }
           }
         }
         else {

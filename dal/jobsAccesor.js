@@ -3,11 +3,9 @@ const CITY = require('../model/city');
 const FIELD = require('../model/field');
 const db = require('../model/index');
 const SUBJECT = require('../model/subject');
+const USERJOBS = require('../model/userjobs');
 const Job = db.db.jobs;
-const User = db.db.users;
-const City = db.db.citys;
-const Subject = db.db.subjects;
-const Field = db.db.fields;
+const UserJob = db.db.usersjobs;
 
 class JobsDataAccessor {
 
@@ -22,14 +20,14 @@ class JobsDataAccessor {
         if (cities) where.city = { $in: cities };
 
         const jobs = await Job.findAll({
-            attributes:{exclude:['idCity','idSubject','idField']},
+            attributes: { exclude: ['idCity', 'idSubject', 'idField'] },
             include: [
                 { model: CITY, as: "city", attributes: ["name"] },
                 { model: FIELD, as: 'field', attributes: ['name'] },
                 { model: SUBJECT, as: 'subject', attributes: ['name'] }],
             where: { [Op.and]: where }
         });
-       return jobs;
+        return jobs;
     }
     createJob = async (jobDetailes) => {
         const job = Job.create(jobDetailes);
@@ -44,6 +42,16 @@ class JobsDataAccessor {
     getJobById = async (id) => {
         const job = Job.findOne({ where: { idjob: id } });
         return job;
+    }
+    getJobsByUserId = async (userId) => {
+
+        // const idJobs=UserJob.findAll({where:{idUser:userId}}).idJob;
+        const jobs = await Job.findAll({
+            include: [
+                { model: USERJOBS, as: "userJobs", attributes: ["idJob"] }
+            ],
+            where: { idUser: userId }
+        });
     }
 }
 

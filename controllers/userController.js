@@ -24,12 +24,12 @@ class UserController {
         const { email, iduser, name, phone, password } = req.body;
         if (!email || !iduser || !password) 
             return res.status(400).send('All fields are required');
-        if(!validation.email(email))
-            return res.status(400).send('wrong email');
-        if(!validation.id(iduser))
-            return res.status(400).send('wrong id');
-        if(!validation.phone(phone))
-            return res.status(400).send('wrong phone number');
+        // if(!validation.email(email))
+        //     return res.status(400).send('wrong email');
+        // if(!validation.id(iduser))
+        //     return res.status(400).send('wrong id');
+        // if(!validation.phone(phone))
+        //     return res.status(400).send('wrong phone number');
         const updated = await userDal.updateDetailes(id,{ email, iduser, name, phone, password });  
         if(updated)
             res.status(200).send("user updated");

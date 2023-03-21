@@ -37,6 +37,10 @@ class JobsController {
       await jobsDal.deleteJob(req.params.id);
       res.send("job deleted");
    }
+   getJobsByUserId=async(req,res)=>{
+      const jobs=await jobsDal.getJobsByUserId(req.params.id);
+      res.json(jobs);
+   }
 }
 const jobsController = new JobsController();
 module.exports = jobsController;
