@@ -1,34 +1,47 @@
-const db = require('../model/index')
-const User = db.users
-//const userDal = require("../dal/userAccessor");
-
+const userDal = require("../dal/userAccessor");
+const jobDal = require("../dal/jobsAccesor");
+//const bcrypt = require('bcrypt');
+const verifyJWT = require("../middleware/verifyJWT");
+const email = require("../email");
 
 class UserController {
-    createUser=async(req,res)=> {
-        const { idUser, name, password } = req.body
-        if (!idUser) {
-            return res.status(400).json({ message: 'All fields are required' })
+    getUsers=async(req,res)=>{
+        const users=await userDal.getUsers();
+        if(users)
+            res.status(200).json(users);
+        else
+            res.send("no users");
+    }
+
+    updateDetailes = async (req, res) => {
+        const { email, iduser, name, phone, password } = req.body;
+        // if (!email || !iduser || !password) {
+        //     return res.status(400).json('All fields are required');
+        const deleted = await userDal.deleteUser({iduser});
+        if (deleted) {
+            const created = await userDal.createUser({ email, iduser, name, phone, password });
+            if(created)
+                res.status(200).json("user updated")
+            else
+                res.status(400).json("could not update")
         }
-        const user=User.create({ idUser, name, password })
-
-        if (user) { // Created 
-            return res.status(201).json({ message: 'New user created' })
-        } else {
-            return res.status(400).json({ message: 'Invalid user data received' })
+    }
+    updateJobRequirments = async (req, res) => {
+        const { field, subject, city } = req.query;
+        const userId = verifyJWT.req;
+        const update = await userDal.updateJobRequirments(userId, field, subject, city);
+        if (update.modifiedCount == 0)
+            res.json(update);
+        else {
+            const jobList = await jobDal.getJobs(field, subject, city);
+            res.json(jobList);
         }
-
-        
-    
-    
-     }
-
-    // createUser=async(req,res)=>{
-    //     var UserData=req.body;
-    //     userDal.createUser(UserData);
-    //     res.send();
-    // }
-   
-    
+    }
+    sendCv = async (req, res) => {
+        const employerId = req.query;
+        email.sendEmail(employerId, "An employee just for you", req.body.toString());
+        res.json("cv sent");
+    }
 }
 const userController = new UserController();
 module.exports = userController;

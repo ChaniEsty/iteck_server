@@ -1,38 +1,28 @@
-const dbConfig = require('../config/dbConfig');
-const {Sequelize, DataTypes} = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
+const { sequelize } = require('./sequelize');
+const applyExtraSetup = require("./extra-setup");
+class Sequle {
+ 
+    db = {}
+    constructor() {
 
-const sequelize = new Sequelize(
-    dbConfig.DB,
-    dbConfig.USER,
-    dbConfig.PASSWORD, {
-        host: dbConfig.HOST,
-        dialect: dbConfig.dialect,
-        operatorsAliases: false,
+        this.db.Sequelize = Sequelize;
+        this.db.sequelize = sequelize;
 
-        pool: {
-            max: dbConfig.pool.max,
-            min: dbConfig.pool.min,
-            acquire: dbConfig.pool.acquire,
-            idle: dbConfig.pool.idle
-
-        }
+        this.db.users = require('./user')
+        this.db.jobs = require('./job')
+        this.db.employers = require('./employer')
+        this.db.fields = require('./field')
+        this.db.citys = require('./city')
+        this.db.subjects = require('./subject')
+        this.db.usersjobs = require('./userjobs')
+        this.db.logIns = require('./logIn')
+        applyExtraSetup.applyExtraSetup();
+        this.db.sequelize.sync({ alter:true})
+            .then(() => {
+                console.log('Its working😁😊👍!')
+            })
     }
-)
-sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
-  }).catch((error) => {
-    console.error('Unable to connect to the database: ', error);
-  });
-  
-const db = {}
-
-db.Sequelize = Sequelize
-db.sequelize = sequelize
-
-db.users  = require('./user')(sequelize, DataTypes)
-db.jobs  = require('./job')(sequelize, DataTypes)
-db.sequelize.sync({ force: false })
-.then(() => {
-    console.log('yes re-sync done!')
-})
-module.exports = db
+}
+const sequle = new Sequle();
+module.exports = sequle;

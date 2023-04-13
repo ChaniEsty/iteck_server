@@ -1,54 +1,49 @@
-// // var mysql      = require('mysql');
+// const { where } = require("sequelize");
+// const jobsDal = require("../dal/jobsAccesor");
+const db = require('../model/index')
+const User = db.db.users
+const { Op } = require("sequelize");
+class UserDataAccessor {
 
-// // class UserDataAccessor{
-// //   connection = mysql.createConnection({
-// //   host     : 'localhost',
-// //   user     : 'root',
-// //   password : 'password',
-// //   database : 'iteck',
-  
-// // });
-
-// /*ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-// flush privileges;
-// */ 
-// // constructor() {
-// //     this.init();
-
-// // }
-
-// // init = async () => {
-// //     await this.connection.connect(); 
-// // }
-// //  check=async() => {
-// //       this.connection.query(`SELECT * FROM user`, 
-// //       function (error, results, fields) {
-// //         if (error) throw error;
-// //   console.log(results)
-// //   });
-//    }
-var connect=require("/connection.js")
-class UserDataAccessor{
-  constructor() {
-    this.connection=connect.connection;
-}
- createUser=async(userData) => {
-
-    this.connection.query(`INSERT INTO user (idUsers, name) VALUES (${userData["idUser"]},${userData["name"]})`, 
-    function (error, results, fields) {
-      if (error) throw error;
-
-});
- }
- checkPassword=async(logInData)=>{
-  userId=this.connection.query(`SELECT id FROM user UNION employer  WHERE ${logInData["password"]}=password`, 
-    function (error, results, fields) {
-      if (error) throw error;
-
-});
+  createUser = async (userDetails) => {
+    console.log("in create user");
+    const user = await User.create(userDetails);
+    return user;
+  }
+  deleteUser = async (idUserToDelete) => {
+    const destroyed = await User.destroy({ where: { id: idUserToDelete } });
+    return destroyed;
+  }
+  updateDetailes = async (userToUpdate) => {
+    const { email, iduser, name, phone, password } = userToUpdate;
+    const update = await User.updateOne({ where: { id: userToUpdate.userId } }, { $set: { email: email, name: name, phone: phone, password: password } });
+    return update;
+  }
+  updateJobRequirments = async (userId, field, subject, city) => {
+    const update = await User.updateOne({ where: { id: userId } }, { $set: { field: field, subject: subject, city: city } });
+    return update;
+  }
+  getUsers = async () => {
+    const users = User.findAll();
+    return users;
+  }
+  getUsersAccordingToJob = async (field, subject, city) => {
+    const userList = await User.findAll({
+      where:
+      {
+        [Op.and]: [{
+          [Op.or]: [{ field: { [Op.like]: `%${field}%` } }, { field: "" }]
+        },
+        {
+          [Op.or]: [{ subject: { [Op.like]: `%${subject}%` } }, { subject: "" }]
+        },
+        { [Op.or]: [{ city: { [Op.like]: `%${city}%` } }, { city: "" }] }
+        ]
+      }
+    });
+    return userList;
   }
 }
-//  endConnection(){this.connection.end();}}
 
 const userDataAccessor = new UserDataAccessor();
 module.exports = userDataAccessor;
