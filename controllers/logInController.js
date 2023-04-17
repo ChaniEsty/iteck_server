@@ -4,6 +4,7 @@ const employerDal = require("../dal/employerAccessor");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const validation = require("validator");
+const email = require("../email");
 class LogInController {
   logIn = async (req, res) => {
     debugger;
@@ -44,7 +45,8 @@ class LogInController {
     // if (!validation.phone(phone))
     //   return res.status(400).send('wrong phone number');
     else {
-      console.log("testing")
+      console.log(req.body);
+      console.log(role);
       const duplicate = await logInDal.findUser(email);
       if (duplicate) {
         return res.status(409).json({ message: "Duplicate username" });
@@ -86,19 +88,22 @@ class LogInController {
     }
   }
   newPassword = async (req, res) => {
-    const email = req.query;
-    if (!email)
+    //console.log(req);
+    const signInEmail = req.params.id;
+    console.log(signInEmail,"checking password");
+    if (!signInEmail)
       res.statuse(400).send("no email");
-    if (!validation.email(email))
+    if (!validation.isEmail(signInEmail))
       return res.status(400).send('wrong email');
-    const password = await logInDal.findUser(email);
+    const password = await logInDal.findUser(signInEmail);
     if (password) {
-      const newPassword = require('crypto').randomBytes(4).toString('hex');
-      sendEmail(email, "new password", newPassword);
+      const newPassword = require('crypto').randomBytes(64).toString('hex');
+      console.log(newPassword);
+      email.sendEmail(signInEmail, "new password", newPassword);
       res.json("new password has been sent");
     }
     else
-      res.statuse(400).send("can't create password try again");
+      res.status(400).json("can't create password try again");
   }
 
 }

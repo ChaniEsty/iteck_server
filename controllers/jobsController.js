@@ -12,14 +12,17 @@ class JobsController {
       res.json(jobList);
    }
    createJob = async (req, res) => {
-      const { name, genralDiscription, field, subject, city, neededCharacters, company, employerId } = req.body;
+      const { name, genralDescription, field, subject, city, neededCharacters, company} = req.body;
+      const employerId=req.user.email;
+      console.log(employerId,"empid");
+      console.log(name, genralDescription, field, subject, city, neededCharacters, company);
       const c = await cityDal.addCity(city);
       const idCity = c.idCity;
       const s = await subjectDal.addSubject(subject);
       const idSubject = s.idSubject;
       const f = await fieldDal.addField(field);
       const idField = f.idField;
-      const job = await jobsDal.createJob({ name, genralDiscription, idField, idSubject, idCity, neededCharacters, company, employerId });
+      const job = await jobsDal.createJob({ name, genralDescription, idField, idSubject, idCity, neededCharacters, company, employerId });
       if (job) { // Created 
          const userList = await userDal.getUsersAccordingToJob(field, subject, city);
          if (userList)

@@ -3,7 +3,7 @@ const { sequelize, DataTypes } = require("./sequelize");
 const JOB = sequelize.define(
     "job",
     {
-        idjob: {
+        id: {
             primaryKey: true,
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -13,7 +13,7 @@ const JOB = sequelize.define(
 
             type: DataTypes.STRING,
         },
-        genralDiscription: {
+        genralDescription: {
             type: DataTypes.TEXT,
         },
         idField: {

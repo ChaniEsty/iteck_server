@@ -13,6 +13,9 @@ class Connections {
         job.belongsTo(field, { foreignKey: "idField", as: "field" });
         subject.hasMany(job, { foreignKey: "idSubject", as: "job" });
         job.belongsTo(subject, { foreignKey: "idSubject", as: "subject" });
+        job.belongsToMany(user,{as:"jobusers",through: userjobs });
+        user.belongsToMany(job,{as:"usersjobs",through: userjobs });
+
     }
 }
 const connections = new Connections;

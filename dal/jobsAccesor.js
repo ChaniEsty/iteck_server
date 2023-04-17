@@ -1,4 +1,5 @@
 const { where, Op } = require('sequelize');
+const { USER } = require('../config/dbConfig');
 const CITY = require('../model/city');
 const FIELD = require('../model/field');
 const db = require('../model/index');
@@ -47,10 +48,11 @@ class JobsDataAccessor {
 
         // const idJobs=UserJob.findAll({where:{idUser:userId}}).idJob;
         const jobs = await Job.findAll({
+           
             include: [
-                { model: USERJOBS, as: "userJobs", attributes: ["idJob"] }
+                { model: USER, as: "user", attributes: ["jobId"] }
             ],
-            where: { idUser: userId }
+            where: { userEmail: userId }
         });
     }
 }

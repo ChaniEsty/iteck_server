@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 
 class Email {
     sendEmail = (addressee, subject,text) => {
-        console.log("sending email", user);
+        console.log("sending email", addressee);
         var transporter = nodemailer.createTransport({
             service: 'outlook',
             auth: {

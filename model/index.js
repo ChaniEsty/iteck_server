@@ -19,7 +19,7 @@ class Sequle {
         this.db.logIns = require('./logIn')
         this.db.inquiries = require('./usersInquiries')
         applyExtraSetup.applyExtraSetup();
-        this.db.sequelize.sync({ alter:true})
+        this.db.sequelize.sync({ force:true})
             .then(() => {
                 console.log('Its working😁😊👍!')
             })
