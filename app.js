@@ -11,7 +11,7 @@ const fieldRouter = require("./routs/fieldRouter");
 const subjectRouter = require("./routs/subjectRouter");
 const inquiriesRouter=require("./routs/inquiriesRouter");
 const app = express();
-const PORT = 5000;
+//const PORT = 5000;
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/user", userRouter);
@@ -23,6 +23,6 @@ app.use("/field", fieldRouter);
 app.use("/subject", subjectRouter);
 app.use("/inquiries", inquiriesRouter);
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log("app ruuning");
 });

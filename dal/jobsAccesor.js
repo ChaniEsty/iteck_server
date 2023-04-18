@@ -6,8 +6,10 @@ const db = require('../model/index');
 const SUBJECT = require('../model/subject');
 const USERJOBS = require('../model/userjobs');
 const Job = db.db.jobs;
+const User = db.db.users;
 const UserJob = db.db.usersjobs;
-
+const USERS = require('../model/user');
+const JOB = require('../model/job');
 class JobsDataAccessor {
 
     getJobs = async (field, subject, city) => {
@@ -36,7 +38,7 @@ class JobsDataAccessor {
     }
     deleteJob = async (id) => {
         const job = await Job.destroy({ where: { idjob: id } });
-        console.log(job);
+        //console.log(job);
         return job;
 
     }
@@ -47,14 +49,15 @@ class JobsDataAccessor {
     getJobsByUserId = async (userId) => {
 
         // const idJobs=UserJob.findAll({where:{idUser:userId}}).idJob;
-        const jobs = await Job.findAll({
-           
+        const jobs = await User.findAll({
+           //attributes: ["id"],
             include: [
-                { model: USER, as: "user", attributes: ["jobId"] }
+                { model: JOB }
             ],
-            where: { userEmail: userId }
+            where: { email: userId }
         });
-    }
+        return jobs;
+   }
 }
 
 
