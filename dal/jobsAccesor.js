@@ -14,21 +14,26 @@ class JobsDataAccessor {
 
     getJobs = async (field, subject, city) => {
         let where = {};
-
+        console.log("hg33333333333333333333333333fs",field, subject, city);
         const fields = field ? field.split(",") : null;
         const subjects = subject ? subject.split(",") : null;
         const cities = city ? city.split(",") : null;
-        if (fields) where.field = { $in: fields };
-        if (subjects) where.subject = { $in: subjects };
-        if (cities) where.city = { $in: cities };
+        console.log("hg33333333333333333333333333fs",fields, subjects, cities);
+
+        // if (fields) where.field = { $in: fields };
+        // if (subjects) where.subject = { $in: subjects };
+        // if (cities) where.city = { $in: cities };
+        //  if (fields) where.name =  fields;
+        //  if (subjects) where.subject.name =subjects ;
+        //  if (cities) where.city.name =  cities;
 
         const jobs = await Job.findAll({
             attributes: { exclude: ['idCity', 'idSubject', 'idField'] },
             include: [
-                { model: CITY, as: "city", attributes: ["name"] },
+                { model: CITY, as: "city", attributes: ["name"] ,where:{name : fields}},
                 { model: FIELD, as: 'field', attributes: ['name'] },
                 { model: SUBJECT, as: 'subject', attributes: ['name'] }],
-            where: { [Op.and]: where }
+            // where: { [Op.and]: where }
         });
         return jobs;
     }

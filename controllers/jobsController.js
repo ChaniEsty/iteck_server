@@ -7,8 +7,9 @@ const email = require("../email");
 
 class JobsController {
    getJobs = async (req, res) => {
-      const { field, subject, city } = req.query;
-      const jobList = await jobsDal.getJobs(field, subject, city);
+      const { fields, subjects, cities } = req.query;
+      console.log("kjhggggggggggggggggggggggggggggg",fields, subjects, cities ,req.query);
+      const jobList = await jobsDal.getJobs(fields, subjects, cities);
       res.json(jobList);
    }
    createJob = async (req, res) => {
