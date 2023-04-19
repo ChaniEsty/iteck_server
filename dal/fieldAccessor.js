@@ -12,8 +12,10 @@ class FieldsDataAccessor {
             return fieldExist;
     }
     getFields = async () => {
-        const fieldsList = await Field.findAll();
-        return fieldsList;
+        return await Field.findAll();
+    }
+    getFieldById=async(id)=>{
+        return await Field.findOne({ where: { idField: id }},{attributes:"name"} )
     }
 }
 

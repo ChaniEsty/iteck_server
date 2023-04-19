@@ -12,8 +12,10 @@ class SubjectsDataAccessor {
             return subjectExist;
     }
     getSubjects = async () => {
-        const subjectList = await Subject.findAll();
-        return subjectList;
+        return await Subject.findAll();
+    }
+    getSubjectById=async(id)=>{
+        return await Subject.findOne({ where: { idSubject: id } },{attributes:"name"})
     }
 }
 
