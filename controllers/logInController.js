@@ -56,7 +56,7 @@ class LogInController {
         const loginObject = { email, password: hashedPwd };
         const login = await logInDal.createLogIn(loginObject);
         if (login) { // Created
-          if (role == 'employer') {
+          if (role == 'מעסיק') {
             const empObject = { email, idEmp: iduser, name, phone, password: hashedPwd };
             const employer = await employerDal.createEmployer(empObject);
             if (!employer) {

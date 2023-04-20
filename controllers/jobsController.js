@@ -44,14 +44,15 @@ class JobsController {
    getJobsByUserId = async (req, res) => {
       console.log(req.params.id);
       const jobs = await jobsDal.getJobsByUserId(req.params.id);
-      console.log(jobs.jobs,"dgj");
+      // console.log(jobs.jobs,"dgj");
       // jobs.map((job)=>{
       //    const fieldName=fieldDal.getFieldById(job.field);
       //    const subjectName=subjectDal.getSubjectById(job.subject);
       //    const cityName=cityDal.getCityById(job.city);
       //    const newJob={{job.name},{job.genralDescription},fieldName,subjectName,cityName};
       // })
-      const newJobs=await jobs.jobs.map(async(job) => {
+      if(!jobs==null)
+      {const newJobs=await jobs.jobs.map(async(job) => {
          console.log(job);
          const fieldName=await fieldDal.getFieldById(job.idField);
          const subjectName=await subjectDal.getSubjectById(job.idSubject);
@@ -65,7 +66,9 @@ class JobsController {
          }
       })
       console.log(newJobs,"fgzs");
-      res.json(newJobs);
+      res.json(newJobs);}
+      else
+      res.json("no jobs")
 }
 }
 const jobsController = new JobsController();

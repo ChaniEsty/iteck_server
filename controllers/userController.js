@@ -52,9 +52,27 @@ class UserController {
             res.json(update);
         else {
             const jobList = await jobDal.getJobs(field, subject, city);
+            jobList.forEach(async job => {
+            const update = await userDal.addJobToUser(job.id,userId);
+            });
             res.json(jobList);
         }
     }
+    // updateJobRequirments = async (req, res) => {
+    //     const {idJobs} = req.body;
+    //     const userId = verifyJWT.req;
+
+    //     idJobs.forEach(async jobId => {
+    //         const update = await userDal.addJobToUser(userId, jobId);
+
+    //     });
+    //     if (update.modifiedCount == 0)
+    //         res.json(update);
+    //     else {
+    //         const jobList = await jobDal.getJobs(field, subject, city);
+    //         res.json(jobList);
+    //     }
+    // }
     sendCv = async (req, res) => {
         const employerEmail = req.query;
         if(!validation.email(employerEmail))
