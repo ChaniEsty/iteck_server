@@ -1,7 +1,6 @@
 const { sequelize } = require("./sequelize");
 class Connections {
     applyExtraSetup = () => {
-        console.log(sequelize);
         const { city, field, user, job, employer, subject, userjobs, logIn } = sequelize.models;
         
         job.belongsTo(employer, { foreignKey: "employerId", as: "employer" });

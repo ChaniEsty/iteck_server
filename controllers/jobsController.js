@@ -8,15 +8,12 @@ const email = require("../email");
 class JobsController {
    getJobs = async (req, res) => {
       const { fields, subjects, cities } = req.query;
-      console.log("kjhggggggggggggggggggggggggggggg",fields, subjects, cities ,req.query);
       const jobList = await jobsDal.getJobs(fields, subjects, cities);
       res.json(jobList);
    }
    createJob = async (req, res) => {
       const { name, genralDescription, field, subject, city, neededCharacters, company } = req.body;
       const employerId = req.user.email;
-      console.log(employerId, "empid");
-      console.log(name, genralDescription, field, subject, city, neededCharacters, company);
       const c = await cityDal.addCity(city);
       const idCity = c.idCity;
       const s = await subjectDal.addSubject(subject);
@@ -42,7 +39,6 @@ class JobsController {
       res.send("job deleted");
    }
    getJobsByUserId = async (req, res) => {
-      console.log(req.params.id);
       const jobs = await jobsDal.getJobsByUserId(req.params.id);
       // console.log(jobs.jobs,"dgj");
       // jobs.map((job)=>{
@@ -51,25 +47,24 @@ class JobsController {
       //    const cityName=cityDal.getCityById(job.city);
       //    const newJob={{job.name},{job.genralDescription},fieldName,subjectName,cityName};
       // })
-      if(!jobs==null)
-      {const newJobs=await jobs.jobs.map(async(job) => {
-         console.log(job);
-         const fieldName=await fieldDal.getFieldById(job.idField);
-         const subjectName=await subjectDal.getSubjectById(job.idSubject);
-         const cityName=await cityDal.getCityById(job.idCity)
-         {
-            job.name ,
-            job.generalDescription,
-            fieldName,
-            subjectName,
-            cityName
-         }
-      })
-      console.log(newJobs,"fgzs");
-      res.json(newJobs);}
+      if (!(jobs == null)) {
+         const newJobs = await jobs.jobs.map(async (job) => {
+            const fieldName = await fieldDal.getFieldById(job.idField);
+            const subjectName = await subjectDal.getSubjectById(job.idSubject);
+            const cityName = await cityDal.getCityById(job.idCity)
+            {
+               job.name,
+                  job.generalDescription,
+                  fieldName,
+                  subjectName,
+                  cityName
+            }
+         })
+         res.json(newJobs);
+      }
       else
-      res.json("no jobs")
-}
+         res.json("no jobs")
+   }
 }
 const jobsController = new JobsController();
 module.exports = jobsController;

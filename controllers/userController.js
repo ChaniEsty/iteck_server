@@ -24,12 +24,12 @@ class UserController {
         const { email, iduser, name, phone, password } = req.body;
         if (!email || !iduser || !password) 
             return res.status(400).send('All fields are required');
-        // if(!validation.email(email))
-        //     return res.status(400).send('wrong email');
-        // if(!validation.id(iduser))
-        //     return res.status(400).send('wrong id');
-        // if(!validation.phone(phone))
-        //     return res.status(400).send('wrong phone number');
+        if(!validation.isEmail(email))
+            return res.status(400).send('wrong email');
+        if(!validation.idId(iduser))
+            return res.status(400).send('wrong id');
+        if(!validation.isPhone(phone))
+            return res.status(400).send('wrong phone number');
         const updated = await userDal.updateDetailes(id,{ email, iduser, name, phone, password });  
         if(updated)
             res.status(200).send("user updated");
@@ -46,16 +46,17 @@ class UserController {
     }
     updateJobRequirments = async (req, res) => {
         const { field, subject, city } = req.query;
-        const userId = verifyJWT.req;
+        const userId = req.user.email;
         const update = await userDal.updateJobRequirments(userId, field, subject, city);
         if (update.modifiedCount == 0)
             res.json(update);
         else {
             const jobList = await jobDal.getJobs(field, subject, city);
+            userDal.deleteUserJobs(userId);
             jobList.forEach(async job => {
-            const update = await userDal.addJobToUser(job.id,userId);
+            await userDal.addJobToUser(job.id,userId);
             });
-            res.json(jobList);
+            // res.json(jobList);
         }
     }
     // updateJobRequirments = async (req, res) => {

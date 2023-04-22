@@ -2,7 +2,7 @@
 // const jobsDal = require("../dal/jobsAccesor");
 const db = require('../model/index')
 const User = db.db.users;
-const UserJobs = db.db.userjobs;
+const UserJobs = db.db.usersjobs;
 
 const { Op } = require("sequelize");
 class UserDataAccessor {
@@ -15,23 +15,26 @@ class UserDataAccessor {
     const destroyed = await User.destroy({ where: { id: idUserToDelete } });
     return destroyed;
   }
-  updateDetailes = async (id,userToUpdate) => {
+  updateDetailes = async (id, userToUpdate) => {
     const { email, iduser, name, phone, password } = userToUpdate;
-    const update = await User.updateOne({ where: { id: id } }, { $set: { email: email, iduser:iduser,name: name, phone: phone, password: password } });
+    const update = await User.updateOne({ where: { id: id } }, { $set: { email: email, iduser: iduser, name: name, phone: phone, password: password } });
     return update;
   }
   updateJobRequirments = async (userId, field, subject, city) => {
-    const update = await User.updateOne({ where: { id: userId } }, { $set: { field: field, subject: subject, city: city } });
+    const update = await User.update({ field: field, subject: subject, city: city }, { where: { email: userId } });
     return update;
   }
-  addJobToUser = async (jobId,userEmail) => {
-    return await UserJobs.create({jobId,userEmail});
+  deleteUserJobs=async(userId)=>{
+    UserJobs.destroy({where:{userEmail:userId}})
+  }
+  addJobToUser = async (jobId, userEmail) => {
+    return await UserJobs.create({ jobId, userEmail });
   }
   getUsers = async () => {
     const users = User.findAll();
     return users;
   }
-  
+
   getUsersAccordingToJob = async (field, subject, city) => {
     const userList = await User.findAll({
       where:

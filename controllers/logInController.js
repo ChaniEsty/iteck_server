@@ -36,8 +36,7 @@ class LogInController {
     debugger;
     const { email, iduser, name, phone, password, role } = req.body;
     if (!email || !iduser || !password)
-    {console.log("testing")
-      return res.status(400).json('All fields are required');}
+{      return res.status(400).json('All fields are required');}
     // if (!validation.email(email))
     //   return res.status(400).send('wrong email');
     // if (!validation.id(iduser))
@@ -45,8 +44,6 @@ class LogInController {
     // if (!validation.phone(phone))
     //   return res.status(400).send('wrong phone number');
     else {
-      console.log(req.body);
-      console.log(role);
       const duplicate = await logInDal.findUser(email);
       if (duplicate) {
         return res.status(409).json({ message: "Duplicate username" });
@@ -88,9 +85,7 @@ class LogInController {
     }
   }
   newPassword = async (req, res) => {
-    //console.log(req);
     const signInEmail = req.params.id;
-    console.log(signInEmail,"checking password");
     if (!signInEmail)
       res.statuse(400).send("no email");
     if (!validation.isEmail(signInEmail))
@@ -98,7 +93,6 @@ class LogInController {
     const password = await logInDal.findUser(signInEmail);
     if (password) {
       const newPassword = require('crypto').randomBytes(64).toString('hex');
-      console.log(newPassword);
       email.sendEmail(signInEmail, "new password", newPassword);
       res.json("new password has been sent");
     }
