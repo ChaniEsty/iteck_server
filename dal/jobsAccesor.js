@@ -61,7 +61,7 @@ class JobsDataAccessor {
     getJobsByUserId = async (userId) => {
 
         // const idJobs=UserJob.findAll({where:{idUser:userId}}).idJob;
-        const jobs = await User.findAll({
+        const jobs = await User.findOne({
            attributes: ["email"],
             include: [
                 { model: JOB }
