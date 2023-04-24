@@ -4,7 +4,8 @@ const subjectDal = require("../dal/subjectAccessor");
 const fieldDal = require("../dal/fieldAccessor");
 const userDal = require("../dal/userAccessor");
 const email = require("../email");
-
+// const db = require('../model/index')
+// const User = db.db.users;
 class JobsController {
    getJobs = async (req, res) => {
       const { fields, subjects, cities } = req.query;
@@ -47,20 +48,35 @@ class JobsController {
       //    const cityName=cityDal.getCityById(job.city);
       //    const newJob={{job.name},{job.genralDescription},fieldName,subjectName,cityName};
       // })
+      console.log(jobs.jobs,"11111111111111111");
       if (!(jobs == null)) {
-         const newJobs = await jobs.jobs.map(async (job) => {
-            const fieldName = await fieldDal.getFieldById(job.idField);
-            const subjectName = await subjectDal.getSubjectById(job.idSubject);
-            const cityName = await cityDal.getCityById(job.idCity)
-            {
-               job.name,
-                  job.generalDescription,
-                  fieldName,
-                  subjectName,
-                  cityName
-            }
+         const newJobs = jobs.jobs.map(async (job) => {
+            // const field = await fieldDal.getFieldById(job.idField);
+            // const subject = await subjectDal.getSubjectById(job.idSubject);
+            // const city = await cityDal.getCityById(job.idCity)
+            // console.log( "riki i dont belive",job.name,
+            //    job.genralDescription,
+            //    field.name,
+            //    subject.name,
+            //    city.name);
+            return({
+                  name:job.name,
+                  generalDescription:job.genralDescription,
+                  fieldName:await fieldDal.getFieldById(job.idField).name,
+                  subjectName:await subjectDal.getSubjectById(job.idSubject).name,
+                  cityName:await cityDal.getCityById(job.idCity).name
+            })
          })
-         res.json(newJobs);
+         const newJ=await Promise.all( jobs.jobs.map(async job=>({
+                  name:job.name,
+                  generalDescription:job.genralDescription,
+                  fieldName:await fieldDal.getFieldById(job.idField).name,
+                  subjectName:await subjectDal.getSubjectById(job.idSubject).name,
+                  cityName:await cityDal.getCityById(job.idCity).name
+         })));
+         // const newJobs=await User.findAll();
+         console.log(newJ);
+         await res.json(newJ);
       }
       else
          res.json("no jobs")

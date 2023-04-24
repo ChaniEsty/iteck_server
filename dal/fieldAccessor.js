@@ -15,7 +15,7 @@ class FieldsDataAccessor {
         return await Field.findAll();
     }
     getFieldById=async(id)=>{
-        return await Field.findOne({ where: { idField: id }},{attributes:"name"} )
+        return await Field.findOne({ where:{ idField: id },attributes:["name"]})
     }
 }
 

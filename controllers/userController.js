@@ -46,7 +46,8 @@ class UserController {
     }
     updateJobRequirments = async (req, res) => {
         const { field, subject, city } = req.query;
-        const userId = req.user.email;
+        const userId = req.params.id;
+        console.log(userId);
         const update = await userDal.updateJobRequirments(userId, field, subject, city);
         if (update.modifiedCount == 0)
             res.json(update);

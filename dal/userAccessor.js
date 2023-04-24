@@ -21,6 +21,7 @@ class UserDataAccessor {
     return update;
   }
   updateJobRequirments = async (userId, field, subject, city) => {
+    console.log(userId);
     const update = await User.update({ field: field, subject: subject, city: city }, { where: { email: userId } });
     return update;
   }

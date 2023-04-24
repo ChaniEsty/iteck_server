@@ -9,15 +9,16 @@ class LogInController {
   logIn = async (req, res) => {
     debugger;
     const { signInEmail, signInPassword } = req.body;
+    console.log(signInEmail, signInPassword);
     if (!signInEmail || !signInPassword) {
       return res.status(400).json({
         message: 'All fields are required'
       })
     }
-    // if (!validation.email(signInEmail))
-    //   return res.status(400).json({
-    //     message: 'wrong input'
-    //   })
+    if (!validation.isEmail(signInEmail))
+      return res.status(400).json({
+        message: 'wrong input'
+      })
 
     const foundUser = await logInDal.findUser(signInEmail);
     if (!foundUser) {
@@ -30,7 +31,7 @@ class LogInController {
       , subject: foundUser.subject, city: foundUser.city, characters: foundUser.characters
     }
     const accessToken = jwt.sign(userInfo, process.env.JWT_PASSWORD);
-    res.send({ accessToken: accessToken });
+    res.send({ accessToken: accessToken,user: foundUser});
   }
   createLogIn = async (req, res) => {
     debugger;
