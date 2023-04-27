@@ -41,42 +41,16 @@ class JobsController {
    }
    getJobsByUserId = async (req, res) => {
       const jobs = await jobsDal.getJobsByUserId(req.params.id);
-      // console.log(jobs.jobs,"dgj");
-      // jobs.map((job)=>{
-      //    const fieldName=fieldDal.getFieldById(job.field);
-      //    const subjectName=subjectDal.getSubjectById(job.subject);
-      //    const cityName=cityDal.getCityById(job.city);
-      //    const newJob={{job.name},{job.genralDescription},fieldName,subjectName,cityName};
-      // })
-      console.log(jobs.jobs,"11111111111111111");
       if (!(jobs == null)) {
-         const newJobs = jobs.jobs.map(async (job) => {
-            // const field = await fieldDal.getFieldById(job.idField);
-            // const subject = await subjectDal.getSubjectById(job.idSubject);
-            // const city = await cityDal.getCityById(job.idCity)
-            // console.log( "riki i dont belive",job.name,
-            //    job.genralDescription,
-            //    field.name,
-            //    subject.name,
-            //    city.name);
-            return({
-                  name:job.name,
-                  generalDescription:job.genralDescription,
-                  fieldName:await fieldDal.getFieldById(job.idField).name,
-                  subjectName:await subjectDal.getSubjectById(job.idSubject).name,
-                  cityName:await cityDal.getCityById(job.idCity).name
-            })
-         })
-         const newJ=await Promise.all( jobs.jobs.map(async job=>({
-                  name:job.name,
-                  generalDescription:job.genralDescription,
-                  fieldName:await fieldDal.getFieldById(job.idField).name,
-                  subjectName:await subjectDal.getSubjectById(job.idSubject).name,
-                  cityName:await cityDal.getCityById(job.idCity).name
-         })));
-         // const newJobs=await User.findAll();
-         console.log(newJ);
-         await res.json(newJ);
+         const newJ=await Promise.all( jobs.jobs.map(async job =>{
+            return{
+               name:job.name,
+               generalDescription:job.genralDescription,
+               field:await fieldDal.getFieldById(job.idField),
+               subject:await subjectDal.getSubjectById(job.idSubject),
+               city:await cityDal.getCityById(job.idCity)
+            }}));
+         await res.json(await newJ);
       }
       else
          res.json("no jobs")

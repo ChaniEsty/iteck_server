@@ -14,7 +14,8 @@ class CitiesDataAccessor {
         return await City.findAll();
     }
     getCityById= async (id) => {
-        return await City.findOne({ where: { idCity: id } ,attributes:["name"]});
+        const city= await City.findOne({ where: { idCity: id } ,attributes:["name"]});
+        return city.name;
     }
 }
 

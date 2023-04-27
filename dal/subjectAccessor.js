@@ -15,7 +15,9 @@ class SubjectsDataAccessor {
         return await Subject.findAll();
     }
     getSubjectById=async(id)=>{
-        return await Subject.findOne({ where: { idSubject: id } ,attributes:["name"]})
+        const subject= await Subject.findOne({ where: { idSubject: id } ,attributes:["name"]})
+        console.log(subject.name+"gggggggggggggggggggggggggggg");
+        return subject.name;
     }
 }
 
