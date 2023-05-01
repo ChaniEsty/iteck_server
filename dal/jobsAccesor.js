@@ -13,35 +13,25 @@ const JOB = require('../model/job');
 class JobsDataAccessor {
 
     getJobs = async (field, subject, city) => {
+        console.log(field, subject, city);
         let whereCity = {};
         let whereField = {};
         let whereSubject = {};
-        const fields = field ? field.split(",") : null;
-        const subjects = subject ? subject.split(",") : null;
-        const cities = city ? city.split(",") : null;
-
-        if (fields) whereField={name:fields};
-        if (subjects) whereSubject={name:subjects};
-        if (cities) whereCity={name:cities};
-        //  if (fields) where.name =  fields;
-        //  if (subjects) where.subject.name =subjects ;
-        //  if (cities) where.city.name =  cities;
+        const fields = !field && field != "" ? field.split(",") : null;
+        const subjects = !subject && subject != "" ? subject.split(",") : null;
+        const cities = !city && city != "" ? city.split(",") : null;
+        console.log(fields, subjects, cities);
+        if (fields) whereField = { name: fields };
+        if (subjects) whereSubject = { name: subjects };
+        if (cities) whereCity = { name: cities };
 
         const jobs = await Job.findAll({
             attributes: { exclude: ['idCity', 'idSubject', 'idField'] },
             include: [
-                { model: CITY, as: "city", attributes: ["name"] ,where:whereCity},
-                { model: FIELD, as: 'field', attributes: ['name'] ,where:whereField},
-                { model: SUBJECT, as: 'subject', attributes: ['name'],where:whereSubject}
+                { model: CITY, as: "city", attributes: ["name"], where: whereCity },
+                { model: FIELD, as: 'field', attributes: ['name'], where: whereField },
+                { model: SUBJECT, as: 'subject', attributes: ['name'], where: whereSubject }
             ]
-
-                // where: {
-                //     [Op.or]: [
-                //       { authorId: 12 },
-                //       { authorId: 13 }
-                //     ]
-                //   }
-            // where: { [Op.and]: where }
         });
         return jobs;
     }
@@ -60,16 +50,15 @@ class JobsDataAccessor {
     }
     getJobsByUserId = async (userId) => {
 
-        // const idJobs=UserJob.findAll({where:{idUser:userId}}).idJob;
         const jobs = await User.findOne({
-           attributes: ["email"],
+            attributes: ["email"],
             include: [
                 { model: JOB }
             ],
             where: { email: userId }
         });
         return jobs;
-   }
+    }
 }
 
 
