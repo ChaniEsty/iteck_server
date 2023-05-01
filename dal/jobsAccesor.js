@@ -17,7 +17,7 @@ class JobsDataAccessor {
         let whereCity = {};
         let whereField = {};
         let whereSubject = {};
-        const fields = !field && field != "" ? field.split(",") : null;
+        const fields = (field==null) && field != "" ? field.split(",") : null;
         const subjects = !subject && subject != "" ? subject.split(",") : null;
         const cities = !city && city != "" ? city.split(",") : null;
         console.log(fields, subjects, cities);
@@ -48,12 +48,35 @@ class JobsDataAccessor {
         const job = Job.findOne({ where: { idjob: id } });
         return job;
     }
+    // getJobsByUserId = async (userId) => {
+
+    //     const jobs = await User.findOne({
+    //         attributes: ["email"],
+    //         include: [
+    //             { model: JOB }
+    //         ],
+    //         where: { email: userId }
+    //     });
+    //     return jobs;
+    // }
     getJobsByUserId = async (userId) => {
 
         const jobs = await User.findOne({
+            // models.products.findAll({
+            //     include: [
+            //       {model: models.comments, include: [models.comments.users] }
+            //     ]
+            //   }) 
             attributes: ["email"],
             include: [
-                { model: JOB }
+                {
+                    model: JOB, attributes: { exclude: ['idCity', 'idSubject', 'idField'] },
+                    include: [
+                        { model: CITY, as: "city", attributes: ["name"] },
+                        { model: FIELD, as: 'field', attributes: ['name'] },
+                        { model: SUBJECT, as: 'subject', attributes: ['name']}]
+                },
+
             ],
             where: { email: userId }
         });

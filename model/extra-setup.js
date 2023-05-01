@@ -9,6 +9,9 @@ class Connections {
         user.belongsTo(logIn, { foreignKey: "email", as: "login" });
         logIn.hasOne(user, { foreignKey: "email", as: "user" });
 
+        employer.belongsTo(logIn, { foreignKey: "email", as: "login" });
+        logIn.hasOne(employer, { foreignKey: "email", as: "employer" });
+
         city.hasMany(job, { foreignKey: "idCity", as: "job" });
         job.belongsTo(city, { foreignKey: "idCity", as: "city" });
 

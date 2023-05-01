@@ -27,11 +27,12 @@ class LogInController {
     const match = await bcrypt.compare(signInPassword, foundUser.password);
     if (!match) return res.status(401).json({ message: 'Unauthorized' });
     const userInfo = {
-      email: foundUser.email, iduser: foundUser.iduser, name: foundUser.name, phone: foundUser.phone, password: foundUser.password, field: foundUser.field
-      , subject: foundUser.subject, city: foundUser.city, characters: foundUser.characters
+      email: foundUser.email, name: foundUser.user?foundUser.user.name:foundUser.employer.name, phone: foundUser.user?foundUser.user.phone:foundUser.employer.phone, password: foundUser.password, field: foundUser.user?foundUser.user.field:null
+      , subject: foundUser.user?foundUser.user.subject:null, city: foundUser.user?foundUser.user.city:null, characters: foundUser.user?foundUser.user.characters:null
     }
+    
     const accessToken = jwt.sign(userInfo, process.env.JWT_PASSWORD);
-    res.send({ accessToken: accessToken,user: foundUser});
+    res.send({ accessToken: accessToken,user: userInfo});
   }
   createLogIn = async (req, res) => {
     debugger;

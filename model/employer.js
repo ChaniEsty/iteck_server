@@ -8,11 +8,6 @@ const EMPLOYER = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        idEmp: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            // unique: true
-        },
         name: {
             type: DataTypes.STRING,
         },
