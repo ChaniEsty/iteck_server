@@ -4,7 +4,7 @@ const userRouter = express.Router();
 const verifyJWT = require("../middleware/verifyJWT")
 
 userRouter.route("/")
-    .post(verifyJWT,userController.sendCv)
+    .post(userController.sendCv)
 userRouter.route("/:id")
     .get(userController.getUserById)
     .put(verifyJWT,userController.updateDetailes)

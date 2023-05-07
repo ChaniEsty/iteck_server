@@ -17,10 +17,10 @@ class JobsDataAccessor {
         let whereCity = {};
         let whereField = {};
         let whereSubject = {};
-        const fields = (field==null) && field != "" ? field.split(",") : null;
-        const subjects = !subject && subject != "" ? subject.split(",") : null;
-        const cities = !city && city != "" ? city.split(",") : null;
-        console.log(fields, subjects, cities);
+        const fields = (field=="null") || (field == "") ? null:field.split(",");
+        const subjects = (subject=="null") || (subject == "") ? null:subject.split(",");
+        const cities = (city=="null") || (city == "")? null:city.split(",");
+        console.log(fields, subjects, cities,"after split");
         if (fields) whereField = { name: fields };
         if (subjects) whereSubject = { name: subjects };
         if (cities) whereCity = { name: cities };

@@ -76,8 +76,10 @@ class UserController {
     //     }
     // }
     sendCv = async (req, res) => {
-        const employerEmail = req.query;
-        if(!validation.email(employerEmail))
+        console.log("manged to srend cv");
+        const employerEmail = req.query.empId;
+        console.log(employerEmail+"999999999999999999999999999999999");
+        if(!validation.isEmail(employerEmail))
             res.send("wrong email");
         email.sendEmail(employerEmail, "An employee just for you", req.body.toString());
         res.send("cv sent");
