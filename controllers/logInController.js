@@ -28,7 +28,7 @@ class LogInController {
     if (!match) return res.status(401).json({ message: 'Unauthorized' });
     const userInfo = {
       email: foundUser.email, name: foundUser.user?foundUser.user.name:foundUser.employer.name, phone: foundUser.user?foundUser.user.phone:foundUser.employer.phone, password: foundUser.password, field: foundUser.user?foundUser.user.field:null
-      , subject: foundUser.user?foundUser.user.subject:null, city: foundUser.user?foundUser.user.city:null, characters: foundUser.user?foundUser.user.characters:null
+      , subject: foundUser.user?foundUser.user.subject:null, city: foundUser.user?foundUser.user.city:null, characters: foundUser.user?foundUser.user.characters:null,role:foundUser.user?"employee":"employer"
     }
     
     const accessToken = jwt.sign(userInfo, process.env.JWT_PASSWORD);

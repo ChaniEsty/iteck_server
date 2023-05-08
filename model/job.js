@@ -13,7 +13,10 @@ const JOB = sequelize.define(
 
             type: DataTypes.STRING,
         },
-        genralDescription: {
+        generalDescription: {
+            type: DataTypes.TEXT,
+        },
+        requirements: {
             type: DataTypes.TEXT,
         },
         idField: {
