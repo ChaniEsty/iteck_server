@@ -16,7 +16,6 @@ class CitiesDataAccessor {
     getCityById= async (id) => {
         const city= await City.findOne({ where: { idCity: id } ,attributes:["name"]});
         const name=city.name;
-        //console.log(name,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         return name;
     }
 }

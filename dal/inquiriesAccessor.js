@@ -1,6 +1,5 @@
 const db = require('../model/index');
 const Inquiries = db.db.inquiries;
-const { where } = require('sequelize');
 
 class InquiriesDataAccessor {
     getInquiries=async()=>{

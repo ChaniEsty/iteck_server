@@ -8,8 +8,6 @@ userRouter.route("/")
 userRouter.route("/:id")
     .get(userController.getUserById)
     .put(verifyJWT,userController.updateDetailes)
-// userRouter.route("/job")
-    // .put(verifyJWT,userController.updateJobRequirments)
 userRouter.route("/job")
     .get(verifyJWT,userController.updateJobRequirments)
 

@@ -11,7 +11,6 @@ const fieldRouter = require("./routs/fieldRouter");
 const subjectRouter = require("./routs/subjectRouter");
 const inquiriesRouter=require("./routs/inquiriesRouter");
 const app = express();
-//const PORT = 5000;
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/user", userRouter);

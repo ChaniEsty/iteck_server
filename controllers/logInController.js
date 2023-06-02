@@ -7,9 +7,7 @@ const validation = require("validator");
 const email = require("../email");
 class LogInController {
   logIn = async (req, res) => {
-    debugger;
     const { signInEmail, signInPassword } = req.body;
-    console.log(signInEmail, signInPassword);
     if (!signInEmail || !signInPassword) {
       return res.status(400).json({
         message: 'All fields are required'
@@ -35,16 +33,15 @@ class LogInController {
     res.send({ accessToken: accessToken,user: userInfo});
   }
   createLogIn = async (req, res) => {
-    debugger;
     const { email, iduser, name, phone, password, role } = req.body;
     if (!email || !iduser || !password)
 {      return res.status(400).json('All fields are required');}
-    // if (!validation.email(email))
-    //   return res.status(400).send('wrong email');
-    // if (!validation.id(iduser))
-    //   return res.status(400).send('wrong id');
-    // if (!validation.phone(phone))
-    //   return res.status(400).send('wrong phone number');
+    if (!validation.isEmail(email))
+      return res.status(400).send('wrong email');
+    if (!validation.isId(iduser))
+      return res.status(400).send('wrong id');
+    if (!validation.isPhone(phone))
+      return res.status(400).send('wrong phone number');
     else {
       const duplicate = await logInDal.findUser(email);
       if (duplicate) {
@@ -54,7 +51,7 @@ class LogInController {
         const hashedPwd = await bcrypt.hash(password, 10);
         const loginObject = { email, password: hashedPwd };
         const login = await logInDal.createLogIn(loginObject);
-        if (login) { // Created
+        if (login) { 
           if (role == 'מעסיק') {
             const empObject = { email, idEmp: iduser, name, phone, password: hashedPwd };
             const employer = await employerDal.createEmployer(empObject);
@@ -64,7 +61,6 @@ class LogInController {
             }
             else{
               res.status(200).json("employer added");
-              // this.logIn(req, res);
             }
           }
           else {
@@ -76,7 +72,6 @@ class LogInController {
             }
             else{
               res.status(200).json("user added");
-              // this.logIn(req, res);
             }
           }
         }

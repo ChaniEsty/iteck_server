@@ -1,6 +1,5 @@
 const userDal = require("../dal/userAccessor");
 const jobDal = require("../dal/jobsAccesor");
-const verifyJWT = require("../middleware/verifyJWT");
 const email = require("../email");
 const validation = require("validator");
 
@@ -35,19 +34,10 @@ class UserController {
             res.status(200).send("user updated");
         else
             res.status(400).send("could not update");
-        // const deleted = await userDal.deleteUser({iduser});
-        // if (deleted) {
-        //     const created = await userDal.createUser({ email, iduser, name, phone, password });
-        //     if(created)
-        //         res.status(200).json("user updated")
-        //     else
-        //         res.status(400).json("could not update")
-        // }
     }
     updateJobRequirments = async (req, res) => {
         const { field, subject, city } = req.query;
         const userId = req.user.email;
-        console.log(userId + "0000000000000000000000000");
         const update = await userDal.updateJobRequirments(userId, field, subject, city);
         if (update.modifiedCount == 0)
             res.json(update);
@@ -57,28 +47,11 @@ class UserController {
             jobList.forEach(async job => {
                 await userDal.addJobToUser(job.id, userId);
             });
-            // res.json(jobList);
         }
     }
-    // updateJobRequirments = async (req, res) => {
-    //     const {idJobs} = req.body;
-    //     const userId = verifyJWT.req;
-
-    //     idJobs.forEach(async jobId => {
-    //         const update = await userDal.addJobToUser(userId, jobId);
-
-    //     });
-    //     if (update.modifiedCount == 0)
-    //         res.json(update);
-    //     else {
-    //         const jobList = await jobDal.getJobs(field, subject, city);
-    //         res.json(jobList);
-    //     }
-    // }
+   
     sendCv = async (req, res) => {
-        console.log("manged to send cv");
         const employerEmail = req.query.empId;
-        console.log(employerEmail + "999999999999999999999999999999999");
         if (!validation.isEmail(employerEmail))
             res.send("wrong email");
         else {
