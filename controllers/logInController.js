@@ -7,9 +7,7 @@ const validation = require("validator");
 const email = require("../email");
 class LogInController {
   logIn = async (req, res) => {
-    debugger;
     const { signInEmail, signInPassword } = req.body;
-    console.log(signInEmail, signInPassword);
     if (!signInEmail || !signInPassword) {
       return res.status(400).json({
         message: 'All fields are required'
@@ -52,7 +50,7 @@ class LogInController {
         const hashedPwd = await bcrypt.hash(password, 10);
         const loginObject = { email, password: hashedPwd };
         const login = await logInDal.createLogIn(loginObject);
-        if (login) { // Created
+        if (login) { 
           if (role == 'מעסיק') {
             const empObject = { email, name, phone, password: hashedPwd };
             const employer = await employerDal.createEmployer(empObject);
@@ -62,7 +60,6 @@ class LogInController {
             }
             else{
               res.status(200).json("employer added");
-              // this.logIn(req, res);
             }
           }
           else {
@@ -74,7 +71,6 @@ class LogInController {
             }
             else{
               res.status(200).json("user added");
-              // this.logIn(req, res);
             }
           }
         }

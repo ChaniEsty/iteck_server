@@ -7,15 +7,12 @@ const email = require("../email");
 
 class JobsController {
    getJobs = async (req, res) => {
-      console.log("in get jobs");
       const { fields, subjects, cities } = req.query;
       const jobList = await jobsDal.getJobs(fields, subjects, cities);
-      console.log(jobList,"33333333333333333333333333333");
       res.json(jobList);
    }
    createJob = async (req, res) => {
       const { name,generalDescription,requirements,field,subject,city,neededCharacters,company } = req.body;
-      console.log(name,generalDescription,requirements,field,subject,city,neededCharacters,company,"tttttttttttttttttttttttttttttttttttt");
       const employerId = req.user.email;
       const c = await cityDal.addCity(city);
       const idCity = c.idCity;
@@ -43,7 +40,6 @@ class JobsController {
    }
   
    getJobsByUserId = async (req, res) => {
-      console.log("in get jobs by user id");
       const jobs = await jobsDal.getJobsByUserId(req.params.id);
       if (!(jobs == null)) {
          res.json(jobs);

@@ -1,4 +1,3 @@
-const { UniqueConstraintError } = require("sequelize");
 const { sequelize, DataTypes } = require("./sequelize");
 const JOB = sequelize.define(
     "job",

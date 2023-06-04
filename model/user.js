@@ -7,11 +7,6 @@ const USER = sequelize.define(
             allowNull: false,
             primaryKey: true
         },
-        // iduser: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true,
-        //     // unique: true
-        // },
         name: {
             type: DataTypes.STRING,
         },

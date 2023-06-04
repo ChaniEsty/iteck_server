@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const db = require('../model/index')
 const Employer = db.db.employers
 const Job=db.db.jobs;

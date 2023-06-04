@@ -1,9 +1,6 @@
-// const { where } = require("sequelize");
-// const jobsDal = require("../dal/jobsAccesor");
 const db = require('../model/index')
 const User = db.db.users;
 const UserJobs = db.db.usersjobs;
-
 const { Op } = require("sequelize");
 class UserDataAccessor {
 
@@ -21,7 +18,6 @@ class UserDataAccessor {
     return update;
   }
   updateJobRequirments = async (userId, field, subject, city) => {
-    console.log(userId+"userId22222222222222222222222222222222222");
     const update = await User.update({ field: field, subject: subject, city: city }, { where: { email: userId } });
     return update;
   }
@@ -37,7 +33,7 @@ class UserDataAccessor {
     return users;
   }
   getUserById=async(id)=>{
-    const user=User.findOne({where:{userEmail:id}});
+    const user=User.findOne({where:{email:id}});
     return user;
   }
 
