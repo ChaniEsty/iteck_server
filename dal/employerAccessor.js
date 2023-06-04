@@ -7,8 +7,8 @@ class EmployerDataAccessor {
         const employer = await Employer.create(employerDetails);
         return employer;
     }
-    getJobs = async (id) => {
-        const jobs = await Job.findAll({ where: { employerId: id } });
+    getJobsById = async (email) => {
+        const jobs = await Job.findAll({ where: { email: email } });
         return jobs;
     }
 }

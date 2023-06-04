@@ -2,11 +2,11 @@ const employerDal = require("../dal/employerAccessor");
 
 class EmployerController {
    
-    getJobs = async (req, res) => {
+    getJobsById = async (req, res) => {
         const idEmp=req.params;
-        const jobs=employerDal.getJobs(idEmp.id);
+        const jobs=employerDal.getJobsById(idEmp.id);
         if(jobs==null)
-            res.status(400).json('invalid id');
+            res.status(400).json('invalid email');
         else
             res.status(201).json({"jobs":jobs});
     }

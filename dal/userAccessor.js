@@ -21,7 +21,7 @@ class UserDataAccessor {
     return update;
   }
   updateJobRequirments = async (userId, field, subject, city) => {
-    console.log(userId);
+    console.log(userId+"userId22222222222222222222222222222222222");
     const update = await User.update({ field: field, subject: subject, city: city }, { where: { email: userId } });
     return update;
   }
@@ -29,11 +29,16 @@ class UserDataAccessor {
     UserJobs.destroy({where:{userEmail:userId}})
   }
   addJobToUser = async (jobId, userEmail) => {
+    console.log("adding job66666666666666666666666666666666666666");
     return await UserJobs.create({ jobId, userEmail });
   }
   getUsers = async () => {
     const users = User.findAll();
     return users;
+  }
+  getUserById=async(id)=>{
+    const user=User.findOne({where:{userEmail:id}});
+    return user;
   }
 
   getUsersAccordingToJob = async (field, subject, city) => {

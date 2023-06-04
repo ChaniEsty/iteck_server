@@ -20,6 +20,7 @@ class UserController {
         res.status(400).send("no user found");
     }
     updateDetailes = async (req, res) => {
+        console.log("update details");
         const id = req.params;
         const { email, iduser, name, phone, password } = req.body;
         if (!email || !iduser || !password)
@@ -45,6 +46,7 @@ class UserController {
         // }
     }
     updateJobRequirments = async (req, res) => {
+        console.log("update job 7777777777777777777777777777777777777777777777777");
         const { field, subject, city } = req.query;
         const userId = req.user.email;
         console.log(userId + "0000000000000000000000000");

@@ -36,15 +36,13 @@ class LogInController {
   }
   createLogIn = async (req, res) => {
     debugger;
-    const { email, iduser, name, phone, password, role } = req.body;
-    if (!email || !iduser || !password)
+    const { email, name, phone, password, role } = req.body;
+    if (!email || !password)
 {      return res.status(400).json('All fields are required');}
-    // if (!validation.email(email))
-    //   return res.status(400).send('wrong email');
-    // if (!validation.id(iduser))
-    //   return res.status(400).send('wrong id');
-    // if (!validation.phone(phone))
-    //   return res.status(400).send('wrong phone number');
+    if (!validation.isEmail(email))
+      return res.status(400).send('wrong email');
+    if (!validation.isMobilePhone(phone))
+      return res.status(400).send('wrong phone number');
     else {
       const duplicate = await logInDal.findUser(email);
       if (duplicate) {
@@ -56,7 +54,7 @@ class LogInController {
         const login = await logInDal.createLogIn(loginObject);
         if (login) { // Created
           if (role == 'מעסיק') {
-            const empObject = { email, idEmp: iduser, name, phone, password: hashedPwd };
+            const empObject = { email, name, phone, password: hashedPwd };
             const employer = await employerDal.createEmployer(empObject);
             if (!employer) {
               logInDal.delete(email);
@@ -68,7 +66,7 @@ class LogInController {
             }
           }
           else {
-            const userObject = { email, iduser, name, phone, password: hashedPwd };
+            const userObject = { email,name, phone, password: hashedPwd };
             const user = await userDal.createUser(userObject);
             if (!user) {
               logInDal.delete(email);
