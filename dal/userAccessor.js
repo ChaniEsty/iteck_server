@@ -12,11 +12,14 @@ class UserDataAccessor {
     const destroyed = await User.destroy({ where: { id: idUserToDelete } });
     return destroyed;
   }
-  updateDetailes = async (id, userToUpdate) => {
-    const { email, iduser, name, phone, password } = userToUpdate;
-    const update = await User.updateOne({ where: { id: id } }, { $set: { email: email, iduser: iduser, name: name, phone: phone, password: password } });
+  updateDetailes = async (email, userToUpdate) => {
+    const { name, phone, password } = userToUpdate;
+    const update = await User.updateOne({ where: { email: email } }, { $set: {  name: name, phone: phone, password: password } });
     return update;
   }
+  updatePassword=async(email,password)=>{
+    return await User.update({ password:password},{ where: { email: email }});
+}
   updateJobRequirments = async (userId, field, subject, city) => {
     const update = await User.update({ field: field, subject: subject, city: city }, { where: { email: userId } });
     return update;

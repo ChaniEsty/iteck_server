@@ -16,6 +16,9 @@ class LogInDataAccessor {
     delete = async (email) => {
         await LogIn.destroy({ where: { email: email } });
     }
+    update=async(email,password)=>{
+        return await LogIn.update({ password:password},{ where: { email: email }});
+    }
 }
 const logInDataAccessor = new LogInDataAccessor();
 module.exports = logInDataAccessor;

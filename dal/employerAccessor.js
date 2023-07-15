@@ -10,6 +10,9 @@ class EmployerDataAccessor {
         const jobs = await Job.findAll({ where: { email: email } });
         return jobs;
     }
+    update=async(email,password)=>{
+        return await Employer.update({ password:password},{ where: { email: email }});
+    }
 }
 const employerDataAccessor = new EmployerDataAccessor();
 module.exports = employerDataAccessor;

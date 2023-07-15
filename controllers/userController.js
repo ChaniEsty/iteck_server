@@ -20,17 +20,17 @@ class UserController {
     }
     updateDetailes = async (req, res) => {
         console.log("update details");
-        const id = req.params;
-        const { email, iduser, name, phone, password } = req.body;
-        if (!email || !iduser || !password)
+        const email = req.params;
+        const {name, phone, password } = req.body;
+        if (!password)
             return res.status(400).send('All fields are required');
         if (!validation.isEmail(email))
             return res.status(400).send('wrong email');
-        if (!validation.idId(iduser))
-            return res.status(400).send('wrong id');
         if (!validation.isPhone(phone))
             return res.status(400).send('wrong phone number');
-        const updated = await userDal.updateDetailes(id, { email, iduser, name, phone, password });
+        const hashedPwd = await bcrypt.hash(password, 10);
+
+        const updated = await userDal.updateDetailes(email, {name, phone, hashedPwd });
         if (updated)
             res.status(200).send("user updated");
         else
@@ -60,7 +60,7 @@ class UserController {
             email.sendEmail(employerEmail, "An employee just for you", req.body.toString());
             res.send("cv sent");
         }
-    }
+    } 
 }
 const userController = new UserController();
 module.exports = userController;
