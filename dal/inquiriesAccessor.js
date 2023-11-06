@@ -6,7 +6,8 @@ class InquiriesDataAccessor {
         return await Inquiries.findAll();
     }
     addInquiry=async(inquiry)=>{
-        return await Inquiries.create(inquiry);
+        console.log(inquiry+"acc");
+        return await Inquiries.create({inquiry});
     }
     getInquiryById=async(id)=>{
         return await Inquiries.findAll({where:{id}});

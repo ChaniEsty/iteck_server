@@ -20,8 +20,8 @@ class UserDataAccessor {
   updatePassword=async(email,password)=>{
     return await User.update({ password:password},{ where: { email: email }});
 }
-  updateJobRequirments = async (userId, field, subject, city) => {
-    const update = await User.update({ field: field, subject: subject, city: city }, { where: { email: userId } });
+  updateJobRequirments = async (email, field, subject, city) => {
+    const update = await User.update({ field: field, subject: subject, city: city }, { where: { email: email } });
     return update;
   }
   deleteUserJobs=async(userId)=>{
@@ -55,6 +55,10 @@ class UserDataAccessor {
       }
     });
     return userList;
+  }
+  updateUserPersonality=async(email,personality)=>{
+    // return await User.update({ password:password},{ where: { email: email }});
+    await User.update({charecters:personality},{where: {email: email}});
   }
 }
 

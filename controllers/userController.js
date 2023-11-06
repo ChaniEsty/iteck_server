@@ -39,15 +39,15 @@ class UserController {
     updateJobRequirments = async (req, res) => {
         console.log("update job 7777777777777777777777777777777777777777777777777");
         const { field, subject, city } = req.query;
-        const userId = req.user.email;
-        const update = await userDal.updateJobRequirments(userId, field, subject, city);
+        const email = req.user.email;
+        const update = await userDal.updateJobRequirments(email, field, subject, city);
         if (update.modifiedCount == 0)
             res.json(update);
         else {
             const jobList = await jobDal.getJobs(field, subject, city);
-            userDal.deleteUserJobs(userId);
+            userDal.deleteUserJobs(email);
             jobList.forEach(async job => {
-                await userDal.addJobToUser(job.id, userId);
+                await userDal.addJobToUser(job.id, email);
             });
         }
     }
@@ -61,6 +61,12 @@ class UserController {
             res.send("cv sent");
         }
     } 
+    updateUserPersonality=async(req,res)=>{
+        const personality = req.body;
+        const email = req.user.email;
+        console.log("777777777777777777777777777777777777777777777777777777777777777777777",personality,email);
+        userDal.updateUserPersonality(email,personality);
+    }
 }
 const userController = new UserController();
 module.exports = userController;

@@ -10,6 +10,8 @@ userRouter.route("/job")
 userRouter.route("/:id")
     .get(userController.getUserById)
     .put(verifyJWT,userController.updateDetailes)
+userRouter.route("/personality")
+    .post(verifyJWT,userController.updateUserPersonality)
 // userRouter.route("/job")
     // .put(verifyJWT,userController.updateJobRequirments)
 

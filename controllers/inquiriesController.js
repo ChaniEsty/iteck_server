@@ -7,9 +7,11 @@ class InquiriesController {
         return res.json(inquiries);
     }
     addInquiry=async(req,res)=>{
-        const inquiry=req.body;
-        inquiriesDal.addInquiry(inquiry);
-        res.status(200)
+        console.log("addInquiry",req);
+        const inquiry=req.body.inquires;
+        console.log(inquiry);
+        await inquiriesDal.addInquiry(inquiry);
+        res.send("added").status(200);
     }
     getInquiryById=async(req,res)=>{
         const id=req.params;
