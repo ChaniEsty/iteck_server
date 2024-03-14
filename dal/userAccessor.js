@@ -28,7 +28,6 @@ class UserDataAccessor {
     UserJobs.destroy({where:{userEmail:userId}})
   }
   addJobToUser = async (jobId, userEmail) => {
-    console.log("adding job66666666666666666666666666666666666666");
     return await UserJobs.create({ jobId, userEmail });
   }
   getUsers = async () => {
@@ -57,7 +56,6 @@ class UserDataAccessor {
     return userList;
   }
   updateUserPersonality=async(email,personality)=>{
-    // return await User.update({ password:password},{ where: { email: email }});
     await User.update({charecters:personality},{where: {email: email}});
   }
 }

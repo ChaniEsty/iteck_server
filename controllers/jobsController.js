@@ -25,7 +25,7 @@ class JobsController {
          const userList = await userDal.getUsersAccordingToJob(field, subject, city);
          if (userList)
             userList.forEach(user => {
-               email.sendEmail(user.dataValues.email, "A new job just for you", job.dataValues.toString());
+               email.sendEmail(user.dataValues.email, "A new job just for you", JSON.stringify(job.dataValues));
             });
 
          res.status(201).json({ message: 'New job created' })

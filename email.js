@@ -2,6 +2,7 @@ var nodemailer = require('nodemailer');
 
 class Email {
     sendEmail = (addressee, subject,text) => {
+        console.log(addressee,subject,text,"sendEmail");
         var transporter = nodemailer.createTransport({
             service: 'outlook',
             auth: {
@@ -18,7 +19,7 @@ class Email {
         transporter.sendMail(mailOptions, function (error, info) {
 
             if (error) {
-                console.log("sending mail", error);
+                console.log("sending Email", error);
             }
             else {
 
