@@ -7,13 +7,28 @@ const email = require("../email");
 
 class JobsController {
    getJobs = async (req, res) => {
+      console.log("getJobs");
       const { fields, subjects, cities } = req.query;
-      const jobList = await jobsDal.getJobs(fields, subjects, cities);
+      console.log(req.user);
+      const email=req.params.id;
+      // const email=req.user?.email;
+      console.log(email,"subject");
+      // const email = req.params.id;
+      let character=null;
+      if(email){
+         character=await userDal.getCharacter(email);
+         character=character?.characters
+         console.log(character,"character");
+      }
+      // const jobList = await jobsDal.getJobs(fields, subjects, cities);
+      const jobList = await jobsDal.getJobs(fields, subjects, cities,character);
+
       res.json(jobList);
    }
    createJob = async (req, res) => {
       const { name,generalDescription,requirements,field,subject,city,neededCharacters,company } = req.body;
       const employerId = req.user.email;
+      console.log(employerId,"create");
       const c = await cityDal.addCity(city);
       const idCity = c.idCity;
       const s = await subjectDal.addSubject(subject);
@@ -40,6 +55,7 @@ class JobsController {
    }
   
    getJobsByUserId = async (req, res) => {
+      console.log("getJobsByUserId");
       const jobs = await jobsDal.getJobsByUserId(req.params.id);
       if (!(jobs == null)) {
          res.json(jobs);

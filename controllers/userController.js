@@ -37,15 +37,18 @@ class UserController {
             res.status(400).send("could not update");
     }
     updateJobRequirments = async (req, res) => {
-        console.log("update job 7777777777777777777777777777777777777777777777777");
         const { field, subject, city } = req.query;
+        let character=req.query.character
+        if(!character)character=await userDal.getCharacter(req.user.email);
+        character=JSON.stringify(character);
         const email = req.user.email;
-        const update = await userDal.updateJobRequirments(email, field, subject, city);
+        console.log(email);
+        const update = await userDal.updateJobRequirments(email, field, subject, city, character);
         if (update.modifiedCount == 0)
             res.json(update);
         else {
-            const jobList = await jobDal.getJobs(field, subject, city);
-            userDal.deleteUserJobs(email);
+            const jobList = await jobDal.getJobs(field, subject, city,character);
+            await userDal.deleteUserJobs(email);
             jobList.forEach(async job => {
                 await userDal.addJobToUser(job.id, email);
             });
@@ -53,6 +56,7 @@ class UserController {
     }
    
     sendCv = async (req, res) => {
+        console.log(req.body.toString());
         const employerEmail = req.query.empId;
         if (!validation.isEmail(employerEmail))
             res.send("wrong email");
@@ -61,12 +65,12 @@ class UserController {
             res.send("cv sent");
         }
     } 
-    updateUserPersonality=async(req,res)=>{
-        const personality = req.body;
-        const email = req.user.email;
-        console.log("777777777777777777777777777777777777777777777777777777777777777777777",personality,email);
-        userDal.updateUserPersonality(email,personality);
-    }
+    // updateUserPersonality=async(req,res)=>{
+    //     const personality = JSON.stringify(req.body);
+    //     const email = req.user.email;
+    //     userDal.updateUserPersonality(email,personality);
+
+    // }
 }
 const userController = new UserController();
 module.exports = userController;
